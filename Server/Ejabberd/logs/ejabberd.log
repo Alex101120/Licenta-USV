@@ -1,0 +1,6 @@
+2024-05-28 11:03:18.524825+00:00 [info] <0.191.0>@ejabberd_config:load/1:82 Loading configuration from /opt/ejabberd/conf/ejabberd.yml
+2024-05-28 11:03:18.575274+00:00 [critical] <0.191.0>@ejabberd_app:start/2:72 Failed to start ejabberd application: Failed to read YAML file '/opt/ejabberd/conf/ejabberd.yml': no such file or directory
+2024-05-28 11:03:23.093838+00:00 [info] <0.191.0>@ejabberd_config:load/1:82 Loading configuration from /opt/ejabberd/conf/ejabberd.yml
+2024-05-28 11:03:23.126844+00:00 [critical] <0.191.0>@ejabberd_app:start/2:72 Failed to start ejabberd application: Failed to read YAML file '/opt/ejabberd/conf/ejabberd.yml': no such file or directory
+2024-05-28 11:15:37.421272+00:00 [info] <0.191.0>@ejabberd_config:load/1:82 Loading configuration from /opt/ejabberd/conf/ejabberd.yml
+2024-05-28 11:15:37.452506+00:00 [critical] <0.191.0>@ejabberd_app:start/2:72 Failed to start ejabberd application: Failed to read YAML file '/opt/ejabberd/conf/ejabberd.yml': no such file or directory

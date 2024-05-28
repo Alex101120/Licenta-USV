@@ -1,0 +1,13 @@
+D:\Licenta\Licenta\Licenta\bin\Debug\Licenta.exe.config
+D:\Licenta\Licenta\Licenta\bin\Debug\Licenta.exe
+D:\Licenta\Licenta\Licenta\bin\Debug\Licenta.pdb
+D:\Licenta\Licenta\Licenta\bin\Debug\Matrix.dll
+D:\Licenta\Licenta\Licenta\bin\Debug\Matrix.xml
+D:\Licenta\Licenta\Licenta\obj\Debug\Licenta.csproj.AssemblyReference.cache
+D:\Licenta\Licenta\Licenta\obj\Debug\Licenta.Form1.resources
+D:\Licenta\Licenta\Licenta\obj\Debug\Licenta.Properties.Resources.resources
+D:\Licenta\Licenta\Licenta\obj\Debug\Licenta.csproj.GenerateResource.cache
+D:\Licenta\Licenta\Licenta\obj\Debug\Licenta.csproj.CoreCompileInputs.cache
+D:\Licenta\Licenta\Licenta\obj\Debug\Licenta.csproj.CopyComplete
+D:\Licenta\Licenta\Licenta\obj\Debug\Licenta.exe
+D:\Licenta\Licenta\Licenta\obj\Debug\Licenta.pdb
