@@ -10,7 +10,10 @@ namespace Licenta
 {
     internal class Connect
     {
-        private XmppClient client;
+        public XmppClient client;
+        public string Destinatar;
+        public string Mesaj;
+
 
         public Connect()
         {
@@ -26,18 +29,22 @@ namespace Licenta
             client.OnMessage += (sender, e) =>
             {
                 Debug.WriteLine($"Message from {e.Message.From}: {e.Message.Body}");
+                Destinatar = e.Message.From;
+                Mesaj = e.Message.Body;
+
+
             };
 
             // Abonează-te la evenimentul OnError pentru a gestiona erorile
             client.OnError += (sender, e) =>
             {
-                Console.WriteLine($"Error: {e.Exception}");
+                Debug.WriteLine($"Error: {e.Exception}");
             };
 
             // Abonează-te la evenimentul OnAuthError pentru a gestiona erorile de autentificare
             client.OnAuthError += (sender, e) =>
             {
-                Console.WriteLine("Authentication Error: " + e.Failure);
+                Debug.WriteLine("Authentication Error: " + e.Failure);
             };
         }
 
@@ -70,6 +77,19 @@ namespace Licenta
             {
                 Console.WriteLine("Client is not connected to the XMPP server.");
             }
+        }
+        public bool IsConnected()
+        {
+            bool status;
+           if( client.StreamActive == true)
+            {
+                status = true;
+            }
+           else
+            {
+                status = false;
+            }
+           return status;
         }
         public void CreateChatRoom(string roomName, string mucService, string xmppDomain)
         {
