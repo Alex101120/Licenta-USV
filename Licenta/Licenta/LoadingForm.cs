@@ -8,7 +8,7 @@ namespace Licenta
 {
     public partial class LoadingForm : Form
     {
-        Connect connect = new Connect();
+        Server server = new Server();
         Timer connectTimer;
         Timer statusTimer;
 
@@ -48,7 +48,7 @@ namespace Licenta
 
         private void connectServer()
         {
-            connect.ConnectToServer();
+            server.ConnectToServer();
         }
 
         private void LoadForm()
@@ -80,7 +80,7 @@ namespace Licenta
         }
         private void UpdateConnectionStatus()
         {
-            bool status = connect.IsConnected();
+            bool status = server.IsConnected();
             if (status)
             {
                 progressBar1.Value = 100;

@@ -1,38 +1,48 @@
-﻿using Matrix;
-using Matrix.Xmpp;
+﻿using Matrix.Xmpp;
 using Matrix.Xmpp.Client;
-using Matrix.Net;
-using Matrix.Xmpp.Muc;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using Matrix.Xmpp.Roster;
+using static Licenta.DashBoard;
 
 namespace Licenta
 {
-    internal class Connect
+    internal class Server
     {
         public XmppClient client;
+        
         public string Destinatar;
         public string Mesaj;
+        public List<User> activeUsers = new List<User>();
+       
 
 
-        public Connect()
+        public Server()
         {
             client = new XmppClient
             {
-                XmppDomain = "localhost",    // Domeniul serverului XMPP
-                Username = "admin",              // Numele de utilizator pentru aplicația ta
-                Password = "admin",         // Parola utilizatorului
-                Resource = "CSharpApp"         // O resursă opțională pentru identificarea sesiunii
-            };
+                XmppDomain = "localhost", // Domeniul serverului XMPP
+                Username = "admin", // Numele de utilizator pentru aplicația ta
+                Password = "admin", // Parola utilizatorului
+                Resource = "CSharpApp" // O resursă opțională pentru identificarea sesiunii
+                
+        };
 
             // Abonează-te la evenimentul OnMessage pentru a gestiona mesajele primite
             client.OnMessage += (sender, e) =>
             {
                 Debug.WriteLine($"Message from {e.Message.From}: {e.Message.Body}");
-                Destinatar = e.Message.From;
-                Mesaj = e.Message.Body;
+                string Destinatar = e.Message.From;
+                string Mesaj = e.Message.Body;
+                if (Mesaj == "Online")
+                {
+                   activeUsers.Add(new User { Username = Destinatar, IsActive = true });
+                    OnActiveUsersUpdated?.Invoke();
+                    Debug.WriteLine("2");
+                }
 
-
+                
             };
 
             // Abonează-te la evenimentul OnError pentru a gestiona erorile
@@ -46,13 +56,25 @@ namespace Licenta
             {
                 Debug.WriteLine("Authentication Error: " + e.Failure);
             };
+
+            // Handle roster updates
+          
+
+            // Handle presence updates
+            
         }
 
+        public List<User> GetActiveUsers()
+        {
+            
+            return activeUsers;
+        }
         // Metodă pentru a conecta clientul la serverul XMPP
         public void ConnectToServer()
         {
             // Conectează-te la server
             client.Open();
+            
         }
 
         // Metodă pentru a închide conexiunea la serverul XMPP
@@ -78,38 +100,16 @@ namespace Licenta
                 Console.WriteLine("Client is not connected to the XMPP server.");
             }
         }
+
         public bool IsConnected()
         {
-            bool status;
-           if( client.StreamActive == true)
-            {
-                status = true;
-            }
-           else
-            {
-                status = false;
-            }
-           return status;
+            return client.StreamActive;
         }
-        public void CreateChatRoom(string roomName, string mucService, string xmppDomain)
-        {
-            
-            string command = $"ejabberdctl create_room {roomName} {mucService} {xmppDomain}";
-
-            // Creează un proces pentru a executa comanda
-            Process process = new Process();
-            process.StartInfo.FileName = "cmd.exe"; // Specificăm că utilizăm cmd.exe pentru a executa comanda
-            process.StartInfo.Arguments = $"/c {command}"; // Specificăm comanda care trebuie executată
-            process.StartInfo.UseShellExecute = false; // Folosim false pentru a putea redirecționa ieșirea
-            process.StartInfo.RedirectStandardOutput = true; // Redirecționăm ieșirea procesului
-            process.Start(); // Pornim procesul
-
-            // Așteptăm ca procesul să se încheie
-            process.WaitForExit();
-
-            // Citim și afișăm ieșirea procesului
-            string output = process.StandardOutput.ReadToEnd();
-            Console.WriteLine(output);
-        }
+       
     }
 }
+
+   
+
+
+

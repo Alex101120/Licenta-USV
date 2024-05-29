@@ -26,3 +26,9 @@ D:\Licenta\Licenta-USV\Licenta\Licenta\obj\Debug\Licenta.pdb
 D:\Licenta\Licenta-USV\Licenta\Licenta\obj\Debug\Licenta.DashBoard.resources
 D:\Licenta\Licenta-USV\Licenta\Licenta\obj\Debug\Licenta.AuthFrom.resources
 D:\Licenta\Licenta-USV\Licenta\Licenta\obj\Debug\Licenta.LoadingForm.resources
+D:\Licenta\Licenta-USV\Licenta\Licenta\bin\Debug\System.Reactive.dll
+D:\Licenta\Licenta-USV\Licenta\Licenta\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+D:\Licenta\Licenta-USV\Licenta\Licenta\bin\Debug\System.Threading.Tasks.Extensions.dll
+D:\Licenta\Licenta-USV\Licenta\Licenta\bin\Debug\System.Reactive.xml
+D:\Licenta\Licenta-USV\Licenta\Licenta\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
+D:\Licenta\Licenta-USV\Licenta\Licenta\bin\Debug\System.Threading.Tasks.Extensions.xml
