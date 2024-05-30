@@ -19,7 +19,7 @@ namespace Licenta
             
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new AuthFrom());
+            Application.Run(new DashBoard());
             
 
         }

@@ -15,7 +15,7 @@ namespace Licenta
         public string Destinatar;
         public string Mesaj;
         public List<User> activeUsers = new List<User>();
-       
+        public event EventHandler UsersUpdated;
 
 
         public Server()
@@ -38,8 +38,8 @@ namespace Licenta
                 if (Mesaj == "Online")
                 {
                    activeUsers.Add(new User { Username = Destinatar, IsActive = true });
-                    OnActiveUsersUpdated?.Invoke();
-                    Debug.WriteLine("2");
+                    UsersUpdated?.Invoke(this, EventArgs.Empty);
+
                 }
 
                 
@@ -66,7 +66,7 @@ namespace Licenta
 
         public List<User> GetActiveUsers()
         {
-            
+            Debug.WriteLine("2");
             return activeUsers;
         }
         // Metodă pentru a conecta clientul la serverul XMPP

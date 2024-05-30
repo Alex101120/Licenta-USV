@@ -37,15 +37,15 @@
             this.flowLayoutPanel1.AutoScroll = true;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(193, 448);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(217, 448);
             this.flowLayoutPanel1.TabIndex = 0;
             this.flowLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.flowLayoutPanel1_Paint);
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(312, 24);
+            this.button2.Location = new System.Drawing.Point(701, 389);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(438, 74);
+            this.button2.Size = new System.Drawing.Size(96, 49);
             this.button2.TabIndex = 2;
             this.button2.Text = "button2";
             this.button2.UseVisualStyleBackColor = true;
