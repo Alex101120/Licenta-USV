@@ -1,10 +1,13 @@
 ﻿using Matrix.Xmpp;
 using Matrix.Xmpp.Client;
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Matrix.Xmpp.Roster;
 using static Licenta.DashBoard;
+using System.Linq;
+using System.Timers;
 
 namespace Licenta
 {
@@ -17,6 +20,11 @@ namespace Licenta
         public List<User> activeUsers = new List<User>();
         public event EventHandler UsersUpdated;
 
+        private Dictionary<string, Timer> userTimers = new Dictionary<string, Timer>();
+        private const double timeoutInterval = 300000;
+
+
+
 
         public Server()
         {
@@ -27,22 +35,36 @@ namespace Licenta
                 Password = "admin", // Parola utilizatorului
                 Resource = "CSharpApp" // O resursă opțională pentru identificarea sesiunii
                 
+                
+                
         };
 
             // Abonează-te la evenimentul OnMessage pentru a gestiona mesajele primite
             client.OnMessage += (sender, e) =>
             {
                 Debug.WriteLine($"Message from {e.Message.From}: {e.Message.Body}");
-                string Destinatar = e.Message.From;
-                string Mesaj = e.Message.Body;
-                if (Mesaj == "Online")
+                string destinatar = e.Message.From;
+                string mesaj = e.Message.Body;
+                if (mesaj == "Online")
                 {
-                   activeUsers.Add(new User { Username = Destinatar, IsActive = true });
-                    UsersUpdated?.Invoke(this, EventArgs.Empty);
+                    var user = activeUsers.FirstOrDefault(u => u.Username == destinatar);
+                    if (user == null)
+                    {
+                        user = new User { Username = destinatar, IsActive = true };
+                        activeUsers.Add(user);
+                        SendMessage(destinatar, "Mesaj Primit");
+                        UsersUpdated?.Invoke(this, EventArgs.Empty);
+                    }
+                    else
+                    {
+                        user.IsActive = true;
+                    }
 
+                    ResetUserTimer(destinatar);
+                    WriteTextToFile("Log.txt", $"Am primit mesajul '{mesaj}' Primit de la {destinatar}");
                 }
 
-                
+
             };
 
             // Abonează-te la evenimentul OnError pentru a gestiona erorile
@@ -66,7 +88,7 @@ namespace Licenta
 
         public List<User> GetActiveUsers()
         {
-            Debug.WriteLine("2");
+           
             return activeUsers;
         }
         // Metodă pentru a conecta clientul la serverul XMPP
@@ -100,12 +122,64 @@ namespace Licenta
                 Console.WriteLine("Client is not connected to the XMPP server.");
             }
         }
+        static void WriteTextToFile(string filePath, string text)
+        {
+            try
+            {
+                string currentDate = DateTime.Now.ToShortDateString();
+                string currentTime = DateTime.Now.ToLongTimeString();
+
+                // Check if file exists and contains the current date
+                bool dateExists = File.Exists(filePath) && File.ReadAllText(filePath).Contains(currentDate);
+
+                using (StreamWriter writer = new StreamWriter(filePath, true))
+                {
+                    if (!dateExists)
+                    {
+                        writer.WriteLine($"Date: {currentDate}");
+                    }
+
+                    writer.WriteLine($"{currentTime}: {text}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+            }
+        }
 
         public bool IsConnected()
         {
             return client.StreamActive;
         }
-       
+        private void ResetUserTimer(string username)
+        {
+            if (userTimers.ContainsKey(username))
+            {
+                userTimers[username].Stop();
+                userTimers[username].Start();
+            }
+            else
+            {
+                Timer timer = new Timer(timeoutInterval);
+                timer.Elapsed += (sender, e) => SetUserInactive(username);
+                timer.AutoReset = false;
+                timer.Start();
+                userTimers[username] = timer;
+            }
+        }
+
+        private void SetUserInactive(string username)
+        {
+            var user = activeUsers.FirstOrDefault(u => u.Username == username);
+            if (user != null)
+            {
+                user.IsActive = false;
+                UsersUpdated?.Invoke(this, EventArgs.Empty);
+                WriteTextToFile("Log.txt", $"Utilizatorul {username} a fost setat ca inactiv.");
+            }
+        }
+
     }
 }
 

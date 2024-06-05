@@ -30,16 +30,16 @@ namespace Licenta
 
         void UpdateUser()
         {
+            
             Debug.WriteLine(server.Mesaj);
             List<User> activeUsers = server.GetActiveUsers();
-
             if (activeUsers != null)
             {
                 foreach (User user in activeUsers)
                 {
                     if (flowLayoutPanel1.InvokeRequired)
                     {
-                        // Dacă nu suntem pe firul UI principal, apelăm UpdateUser din nou pe firul UI principal
+                        
                         flowLayoutPanel1.Invoke(new MethodInvoker(UpdateUser));
                         return;
                     }
@@ -69,7 +69,7 @@ namespace Licenta
                     groupBox.Controls.Add(radioButton);
                     groupBox.Controls.Add(pictureBox);
 
-                    // Adăugăm GroupBox la FlowLayoutPanel
+                   
                     flowLayoutPanel1.Controls.Add(groupBox);
                 }
             }
