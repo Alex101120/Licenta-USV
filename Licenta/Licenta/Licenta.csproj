@@ -33,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="LiveCharts, Version=0.9.7.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
+      <HintPath>..\packages\LiveCharts.0.9.7\lib\net45\LiveCharts.dll</HintPath>
+    </Reference>
     <Reference Include="Matrix, Version=2.1.0.8, Culture=neutral, PublicKeyToken=0120f1df71ff86bc, processorArchitecture=MSIL">
       <HintPath>..\packages\MatriX.2.1.0.8\lib\net45\Matrix.dll</HintPath>
     </Reference>

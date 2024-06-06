@@ -32,3 +32,6 @@ D:\Licenta\Licenta-USV\Licenta\Licenta\bin\Debug\System.Threading.Tasks.Extensio
 D:\Licenta\Licenta-USV\Licenta\Licenta\bin\Debug\System.Reactive.xml
 D:\Licenta\Licenta-USV\Licenta\Licenta\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
 D:\Licenta\Licenta-USV\Licenta\Licenta\bin\Debug\System.Threading.Tasks.Extensions.xml
+D:\Licenta\Licenta-USV\Licenta\Licenta\bin\Debug\LiveCharts.dll
+D:\Licenta\Licenta-USV\Licenta\Licenta\bin\Debug\LiveCharts.pdb
+D:\Licenta\Licenta-USV\Licenta\Licenta\bin\Debug\LiveCharts.xml

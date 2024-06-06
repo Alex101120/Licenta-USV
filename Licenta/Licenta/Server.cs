@@ -45,6 +45,7 @@ namespace Licenta
                 Debug.WriteLine($"Message from {e.Message.From}: {e.Message.Body}");
                 string destinatar = e.Message.From;
                 string mesaj = e.Message.Body;
+                string raspunsping = "Mesaj Primit";
                 if (mesaj == "Online")
                 {
                     var user = activeUsers.FirstOrDefault(u => u.Username == destinatar);
@@ -52,7 +53,7 @@ namespace Licenta
                     {
                         user = new User { Username = destinatar, IsActive = true };
                         activeUsers.Add(user);
-                        SendMessage(destinatar, "Mesaj Primit");
+                        SendMessage(destinatar, raspunsping);
                         UsersUpdated?.Invoke(this, EventArgs.Empty);
                     }
                     else
@@ -61,7 +62,8 @@ namespace Licenta
                     }
 
                     ResetUserTimer(destinatar);
-                    WriteTextToFile("Log.txt", $"Am primit mesajul '{mesaj}' Primit de la {destinatar}");
+                    WriteTextToFile(@"D:\\Licenta\\Licenta-USV\\Licenta\\Logs\\LogsMesajePrimite.txt", $"Am primit mesajul '{mesaj}' Primit de la {destinatar}");
+                    WriteTextToFile(@"D:\\Licenta\\Licenta-USV\\Licenta\\Logs\\LogsMesajeTrimise.txt", $"Am trimis mesajul '{raspunsping}' la {destinatar}");
                 }
 
 
