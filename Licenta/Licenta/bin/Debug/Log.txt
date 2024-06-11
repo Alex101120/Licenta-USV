@@ -49,3 +49,5 @@ Date: 06.06.2024
 14:44:14: Am primit mesajul 'Online' Primit de la placuta3@localhost/CSharpApp
 14:44:28: Am primit mesajul 'Online' Primit de la placuta2@localhost/CSharpApp
 14:44:38: Am primit mesajul 'Online' Primit de la placuta4@localhost/CSharpApp
+Date: 11.06.2024
+12:37:14: Utilizatorul placuta1@localhost/CSharpApp a fost setat ca inactiv.

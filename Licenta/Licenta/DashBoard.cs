@@ -26,7 +26,16 @@ namespace Licenta
             List<User> activeUsers = server.GetActiveUsers();
             if (activeUsers != null)
             {
-               
+
+                if (flowLayoutPanel1.InvokeRequired)
+                {
+                    flowLayoutPanel1.Invoke(new MethodInvoker(UpdateUser));
+                    return;
+                }
+
+                flowLayoutPanel1.Controls.Clear();
+                
+
 
                 foreach (User user in activeUsers)
                 {
@@ -36,7 +45,7 @@ namespace Licenta
                         return;
                     }
 
-                    // Create GUI controls
+                   
                     GroupBox groupBox = new GroupBox();
                     groupBox.Name = "localhost";
                     PictureBox pictureBox = new PictureBox();
@@ -48,16 +57,16 @@ namespace Licenta
                     RadioButton radioButton = new RadioButton
                     {
                         Name = user.Username,
-                        Text = user.Username, // Adding the username as the radio button text
-                        Size = new Size(100, 40), // Set the custom size (width, height)
+                        Text = user.Username, 
+                        Size = new Size(100, 40), 
                         AutoCheck = true,
-                        AutoSize = false // Disable AutoSize to apply custom size
+                        AutoSize = false 
                     };
 
-                    // Add CheckedChanged event handler
+                   
                     radioButton.CheckedChanged += RadioButton_CheckedChanged;
 
-                    // Add controls to GroupBox
+               
                     groupBox.Controls.Add(radioButton);
                     groupBox.Controls.Add(pictureBox);
 
@@ -115,15 +124,15 @@ namespace Licenta
             RadioButton radioButton = new RadioButton
             {
                 Name = "localhost",
-                Text = "localhost", // Adding the username as the radio button text
-                Size = new Size(100, 40), // Set the custom size (width, height)
+                Text = "localhost",
+                Size = new Size(100, 40), 
                 AutoSize = false,
             };
 
-            // Add CheckedChanged event handler
+          
             radioButton.CheckedChanged += RadioButton_CheckedChanged;
 
-            // Add controls to GroupBox
+          
             groupBox.Controls.Add(radioButton);
             groupBox.Controls.Add(pictureBox);
 

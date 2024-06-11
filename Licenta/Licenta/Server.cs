@@ -81,10 +81,7 @@ namespace Licenta
                 Debug.WriteLine("Authentication Error: " + e.Failure);
             };
 
-            // Handle roster updates
-          
-
-            // Handle presence updates
+           
             
         }
 
@@ -131,7 +128,7 @@ namespace Licenta
                 string currentDate = DateTime.Now.ToShortDateString();
                 string currentTime = DateTime.Now.ToLongTimeString();
 
-                // Check if file exists and contains the current date
+             
                 bool dateExists = File.Exists(filePath) && File.ReadAllText(filePath).Contains(currentDate);
 
                 using (StreamWriter writer = new StreamWriter(filePath, true))

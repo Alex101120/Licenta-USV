@@ -53,7 +53,7 @@ namespace Licenta
 
         private void LoadForm()
         {
-            // Dezactivează formularul curent
+     
             this.Enabled = false;
 
             statusTimer.Stop();
@@ -61,21 +61,21 @@ namespace Licenta
             loadTimer.Interval = 2000; // 2 secunde
             loadTimer.Tick += (sender, e) =>
             {
-                // Opriți timerul
+              
                 loadTimer.Stop();
 
-                // Creează o instanță a clasei Dashboard
+              
                 DashBoard dashboard = new DashBoard();
 
-                // Afișează formularul Dashboard
+             
                 dashboard.Show();
 
-                // Ascundeți formularul curent
+               
                 this.Hide();
                
             };
 
-            // Porniți Timer-ul
+          
             loadTimer.Start();
         }
         private void UpdateConnectionStatus()
@@ -99,12 +99,12 @@ namespace Licenta
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            // Implementarea pentru Form1_Load
+           
         }
 
         private void Connecting_TextChanged(object sender, EventArgs e)
         {
-            // Implementarea pentru Connecting_TextChanged
+           
         }
     }
 }
