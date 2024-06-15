@@ -39,13 +39,14 @@ namespace Licenta
                 
         };
 
-            // Abonează-te la evenimentul OnMessage pentru a gestiona mesajele primite
+
             client.OnMessage += (sender, e) =>
             {
                 Debug.WriteLine($"Message from {e.Message.From}: {e.Message.Body}");
                 string destinatar = e.Message.From;
                 string mesaj = e.Message.Body;
                 string raspunsping = "Mesaj Primit";
+
                 if (mesaj == "Online")
                 {
                     var user = activeUsers.FirstOrDefault(u => u.Username == destinatar);
@@ -62,11 +63,13 @@ namespace Licenta
                     }
 
                     ResetUserTimer(destinatar);
-                    WriteTextToFile(@"D:\\Licenta\\Licenta-USV\\Licenta\\Logs\\LogsMesajePrimite.txt", $"Am primit mesajul '{mesaj}' Primit de la {destinatar}");
-                    WriteTextToFile(@"D:\\Licenta\\Licenta-USV\\Licenta\\Logs\\LogsMesajeTrimise.txt", $"Am trimis mesajul '{raspunsping}' la {destinatar}");
+
+                    string receivedLogFilePath = $"D:\\Licenta\\Licenta-USV\\Licenta\\Logs\\{destinatar}_LogsMesajePrimite.txt";
+                    string sentLogFilePath = $"D:\\Licenta\\Licenta-USV\\Licenta\\Logs\\{destinatar}_LogsMesajeTrimise.txt";
+
+                    WriteTextToFile(receivedLogFilePath, $"Am primit mesajul '{mesaj}' Primit de la {destinatar}");
+                    WriteTextToFile(sentLogFilePath, $"Am trimis mesajul '{raspunsping}' la {destinatar}");
                 }
-
-
             };
 
             // Abonează-te la evenimentul OnError pentru a gestiona erorile
@@ -90,18 +93,18 @@ namespace Licenta
            
             return activeUsers;
         }
-        // Metodă pentru a conecta clientul la serverul XMPP
+     
         public void ConnectToServer()
         {
-            // Conectează-te la server
+           
             client.Open();
             
         }
 
-        // Metodă pentru a închide conexiunea la serverul XMPP
+        
         public void DisconnectFromServer()
         {
-            // Închide conexiunea la server
+           
             client.Close();
         }
 
