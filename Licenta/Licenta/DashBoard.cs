@@ -26,7 +26,6 @@ namespace Licenta
             List<User> activeUsers = server.GetActiveUsers();
             if (activeUsers != null)
             {
-
                 if (flowLayoutPanel1.InvokeRequired)
                 {
                     flowLayoutPanel1.Invoke(new MethodInvoker(UpdateUser));
@@ -34,8 +33,7 @@ namespace Licenta
                 }
 
                 flowLayoutPanel1.Controls.Clear();
-                
-
+                MainDashboard.Controls.Clear(); // Clear the MainDashboard panel first
 
                 foreach (User user in activeUsers)
                 {
@@ -45,7 +43,6 @@ namespace Licenta
                         return;
                     }
 
-                   
                     GroupBox groupBox = new GroupBox();
                     groupBox.Name = "localhost";
                     PictureBox pictureBox = new PictureBox();
@@ -57,18 +54,35 @@ namespace Licenta
                     RadioButton radioButton = new RadioButton
                     {
                         Name = user.Username,
-                        Text = user.Username, 
-                        Size = new Size(100, 40), 
+                        Text = user.Username,
+                        Size = new Size(100, 40),
                         AutoCheck = true,
-                        AutoSize = false 
+                        AutoSize = false
                     };
 
-                   
                     radioButton.CheckedChanged += RadioButton_CheckedChanged;
 
-               
+                    Panel userPanel = new Panel
+                    {
+                        Name = $"{user.Username}_Panel",
+                        Size = MainDashboard.Size,
+                        BackColor = Color.Blue,
+                        Visible = false
+                    };
+
+                    // Populate the panel with controls as needed
+                    Label userLabel = new Label
+                    {
+                        Text = $"User Info for {user.Username}",
+                        AutoSize = true
+                    };
+                    userPanel.Controls.Add(userLabel);
+
                     groupBox.Controls.Add(radioButton);
                     groupBox.Controls.Add(pictureBox);
+
+                    // Add the userPanel to the MainDashboard instead of the groupBox
+                    MainDashboard.Controls.Add(userPanel);
 
                     flowLayoutPanel1.Controls.Add(groupBox);
                 }
@@ -79,6 +93,15 @@ namespace Licenta
         {
             if (!(sender is RadioButton radioButton) || !radioButton.Checked)
                 return;
+
+            // Hide all panels and uncheck all radio buttons
+            foreach (Control control in MainDashboard.Controls)
+            {
+                if (control is Panel panel)
+                {
+                    panel.Visible = false;
+                }
+            }
 
             foreach (Control control in flowLayoutPanel1.Controls)
             {
@@ -93,7 +116,18 @@ namespace Licenta
                     }
                 }
             }
+
+            // Show the selected panel
+            Panel selectedPanel = MainDashboard.Controls[$"{radioButton.Name}_Panel"] as Panel;
+            if (selectedPanel != null)
+            {
+                selectedPanel.Visible = true;
+            }
         }
+
+
+
+
 
         private void flowLayoutPanel1_Paint(object sender, PaintEventArgs e)
         {
@@ -160,6 +194,13 @@ namespace Licenta
         }
 
         private void flowLayoutPanel2_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        
+
+        private void panel1_Paint_1(object sender, PaintEventArgs e)
         {
 
         }
