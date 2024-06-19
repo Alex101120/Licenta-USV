@@ -1,0 +1,6 @@
+Date: 17.06.2024
+12:54:06: Valoarea pentru SenzorA: 6
+13:10:28: Valoarea pentru SenzorA: 6
+13:10:44: Valoarea pentru SenzorA: 6
+13:22:19: Valoarea pentru SenzorA: 6
+13:22:25: Valoarea pentru SenzorA: 6

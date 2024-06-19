@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Matrix.Xmpp.Roster;
 using static Licenta.DashBoard;
+using static Licenta.WidgetPanel;
 using System.Linq;
 using System.Timers;
 
@@ -19,9 +20,14 @@ namespace Licenta
         public string Mesaj;
         public List<User> activeUsers = new List<User>();
         public event EventHandler UsersUpdated;
+        public event EventHandler MesajPrimit;
 
         private Dictionary<string, Timer> userTimers = new Dictionary<string, Timer>();
         private const double timeoutInterval = 300000;
+        Dictionary<string, List<string>> sensorData = new Dictionary<string, List<string>>();
+        WidgetPanel widgetpanel;
+        string sensorName;
+
 
 
 
@@ -57,19 +63,63 @@ namespace Licenta
                         SendMessage(destinatar, raspunsping);
                         UsersUpdated?.Invoke(this, EventArgs.Empty);
                     }
-                    else
+                    user.IsActive = true;
+                }
+
+
+                else
+                {
+                    Debug.WriteLine("Am intrat in else");
+                    string[] parts = mesaj.Split('/');
+                    if (parts.Length == 2)
                     {
-                        user.IsActive = true;
+                        MesajPrimit?.Invoke(this, EventArgs.Empty);
+                        sensorName = parts[0]; // Exemplu: "SenzorA"
+                        string sensorValue = parts[1]; // Exemplu: "6"
+                        Debug.WriteLine($"{sensorName}: {sensorValue}");
+
+                        // Verificare dacă există deja cheia (numele senzorului) în dicționar
+                        if (!sensorData.ContainsKey(sensorName))
+                        {
+                            // Dacă nu există, adaugă o nouă intrare în dicționar
+                            sensorData[sensorName] = new List<string>();
+                        }
+
+                        // Adaugă valoarea la lista asociată cu numele senzorului
+                        sensorData[sensorName].Add(sensorValue);
+                       
+                        WriteSensorDataToFile(destinatar, sensorName, sensorValue);
                     }
+                    
+                }
+
+                        
 
                     ResetUserTimer(destinatar);
+                    try
+                    {
+                        string baseLogPath = @"D:\Licenta\Licenta-USV\Licenta\Logs";
+                        string receivedLogFilePath = Path.Combine(baseLogPath, $"{destinatar}_LogsMesajePrimite.txt");
+                        string sentLogFilePath = Path.Combine(baseLogPath, $"{destinatar}_LogsMesajeTrimise.txt");
 
-                    string receivedLogFilePath = $"D:\\Licenta\\Licenta-USV\\Licenta\\Logs\\{destinatar}_LogsMesajePrimite.txt";
-                    string sentLogFilePath = $"D:\\Licenta\\Licenta-USV\\Licenta\\Logs\\{destinatar}_LogsMesajeTrimise.txt";
+                        // Ensure the directory exists
+                        string directoryPath = Path.GetDirectoryName(receivedLogFilePath);
+                        if (!Directory.Exists(directoryPath))
+                        {
+                            Directory.CreateDirectory(directoryPath);
+                        }
 
-                    WriteTextToFile(receivedLogFilePath, $"Am primit mesajul '{mesaj}' Primit de la {destinatar}");
-                    WriteTextToFile(sentLogFilePath, $"Am trimis mesajul '{raspunsping}' la {destinatar}");
-                }
+                        WriteTextToFile(receivedLogFilePath, $"Am primit mesajul '{mesaj}' Primit de la {destinatar}");
+                        WriteTextToFile(sentLogFilePath, $"Am trimis mesajul '{raspunsping}' la {destinatar}");
+
+                       
+
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine($"An error occurred: {ex.Message}");
+                    }
+                
             };
 
             // Abonează-te la evenimentul OnError pentru a gestiona erorile
@@ -86,6 +136,10 @@ namespace Licenta
 
            
             
+        }
+        public String GetVariableName()
+        {
+            return sensorName;
         }
 
         public List<User> GetActiveUsers()
@@ -147,6 +201,29 @@ namespace Licenta
             catch (Exception ex)
             {
                 Console.WriteLine($"An error occurred: {ex.Message}");
+            }
+        }
+
+        private void WriteSensorDataToFile(string destinatar, string sensorName, string sensorValue)
+        {
+            try
+            {
+                string baseLogPath = @"D:\Licenta\Licenta-USV\Licenta\Logs";
+                string sensorLogFilePath = Path.Combine(baseLogPath, $"{destinatar}_{sensorName}.txt");
+
+                // Asigură existența directorului pentru fișierul senzorului
+                string directoryPath = Path.GetDirectoryName(sensorLogFilePath);
+                if (!Directory.Exists(directoryPath))
+                {
+                    Directory.CreateDirectory(directoryPath);
+                }
+
+                // Scrie valoarea senzorului în fișierul corespunzător
+                WriteTextToFile(sensorLogFilePath, $"Valoarea pentru {sensorName}: {sensorValue}");
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"An error occurred while writing sensor data to file: {ex.Message}");
             }
         }
 

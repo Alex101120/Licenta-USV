@@ -1,3 +1,0 @@
-Date: 06.06.2024
-14:50:20: Am primit mesajul 'Online' Primit de la placuta1@localhost/CSharpApp
-14:50:21: Am primit mesajul 'Online' Primit de la placuta1@localhost/CSharpApp

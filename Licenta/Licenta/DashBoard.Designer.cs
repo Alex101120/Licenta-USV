@@ -30,7 +30,7 @@
         {
             Matrix.IO.Cache.MemoryStorage<Matrix.Xmpp.Disco.Info> memoryStorage_11 = new Matrix.IO.Cache.MemoryStorage<Matrix.Xmpp.Disco.Info>();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.button1 = new System.Windows.Forms.Button();
+            this.WidgetAdd = new System.Windows.Forms.Button();
             this.discoManager1 = new Matrix.Xmpp.Client.DiscoManager();
             this.MainDashboard = new System.Windows.Forms.Panel();
             this.SuspendLayout();
@@ -44,14 +44,16 @@
             this.flowLayoutPanel1.TabIndex = 0;
             this.flowLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.flowLayoutPanel1_Paint);
             // 
-            // button1
+            // WidgetAdd
             // 
-            this.button1.Location = new System.Drawing.Point(807, 349);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(115, 99);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
+            this.WidgetAdd.Font = new System.Drawing.Font("Microsoft Sans Serif", 72F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.WidgetAdd.Location = new System.Drawing.Point(807, 353);
+            this.WidgetAdd.Name = "WidgetAdd";
+            this.WidgetAdd.Size = new System.Drawing.Size(114, 95);
+            this.WidgetAdd.TabIndex = 0;
+            this.WidgetAdd.Text = "+";
+            this.WidgetAdd.UseVisualStyleBackColor = true;
+            this.WidgetAdd.Click += new System.EventHandler(this.button1_Click);
             // 
             // discoManager1
             // 
@@ -76,7 +78,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(925, 450);
             this.Controls.Add(this.MainDashboard);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.WidgetAdd);
             this.Controls.Add(this.flowLayoutPanel1);
             this.Name = "DashBoard";
             this.Text = "DashBoard";
@@ -87,7 +89,7 @@
         #endregion
 
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button WidgetAdd;
         private Matrix.Xmpp.Client.DiscoManager discoManager1;
         private System.Windows.Forms.Panel MainDashboard;
     }

@@ -66,8 +66,23 @@ namespace Licenta
                     {
                         Name = $"{user.Username}_Panel",
                         Size = MainDashboard.Size,
-                        BackColor = Color.Blue,
+                        BackColor = Color.White,
+                        BorderStyle = BorderStyle.FixedSingle,
                         Visible = false
+                    };
+
+                    // Label pentru starea utilizatorului (online/offline)
+                    Label statusLabel = new Label
+                    {
+                        Name = $"{user.Username}_StatusLabel",
+                        Text = user.IsActive ? "●Online" : "●Offline",
+                        TextAlign = ContentAlignment.TopRight, // Afișează textul în partea de sus dreapta
+                        Dock = DockStyle.None, // Setează DockStyle.None pentru a putea controla poziționarea manual
+                        Location = new Point(userPanel.Width - 100, 5), // Poziționează label-ul în partea de sus dreapta
+                        Size = new Size(90, 20), // Dimensiunea label-ului
+                        Font = new Font(Font,FontStyle.Bold),
+                        ForeColor = user.IsActive ? Color.Green : Color.Red,
+                        BackColor = Color.Transparent
                     };
 
                     // Populate the panel with controls as needed
@@ -80,6 +95,9 @@ namespace Licenta
 
                     groupBox.Controls.Add(radioButton);
                     groupBox.Controls.Add(pictureBox);
+
+                    // Adăugare label pentru starea utilizatorului în panoul utilizatorului
+                    userPanel.Controls.Add(statusLabel);
 
                     // Add the userPanel to the MainDashboard instead of the groupBox
                     MainDashboard.Controls.Add(userPanel);
@@ -124,6 +142,8 @@ namespace Licenta
                 selectedPanel.Visible = true;
             }
         }
+
+
 
 
 
@@ -203,6 +223,15 @@ namespace Licenta
         private void panel1_Paint_1(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            // Creează o instanță a clasei Dashboard
+            WidgetPanel loadform = new WidgetPanel();
+
+            // Afișează formularul Dashboard
+            loadform.Show();
         }
     }
 }
