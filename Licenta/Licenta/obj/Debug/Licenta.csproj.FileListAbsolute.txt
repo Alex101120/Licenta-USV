@@ -35,4 +35,3 @@ D:\Licenta\Licenta-USV\Licenta\Licenta\bin\Debug\System.Threading.Tasks.Extensio
 D:\Licenta\Licenta-USV\Licenta\Licenta\bin\Debug\LiveCharts.dll
 D:\Licenta\Licenta-USV\Licenta\Licenta\bin\Debug\LiveCharts.pdb
 D:\Licenta\Licenta-USV\Licenta\Licenta\bin\Debug\LiveCharts.xml
-D:\Licenta\Licenta-USV\Licenta\Licenta\obj\Debug\Licenta.WidgetPanel.resources

@@ -17,7 +17,16 @@ namespace Licenta
             InitializeComponent();
             server = new Server();
             server.UsersUpdated += OnUsersUpdated;
+            server.MesajPrimit += UpdateSenzorData;
             server.ConnectToServer();
+            UpdateDateTime();
+
+
+
+            comboBox1.Items.Add("Text UltimaDataPrimita");
+            comboBox1.Items.Add("Text UltimileDatePrimite");
+            comboBox1.Items.Add("Text UltimaDataPrimita");
+
         }
 
         void UpdateUser()
@@ -33,7 +42,7 @@ namespace Licenta
                 }
 
                 flowLayoutPanel1.Controls.Clear();
-                MainDashboard.Controls.Clear(); // Clear the MainDashboard panel first
+                
 
                 foreach (User user in activeUsers)
                 {
@@ -143,7 +152,19 @@ namespace Licenta
             }
         }
 
+        void UpdateSenzorData()
+        {
+            Dictionary<string, List<string>> sensorData = server.GetSenzorData();
 
+            foreach (var sensorName in sensorData.Keys)
+            {
+                // Verifică dacă numele senzorului există deja în comboBox2
+                if (!comboBox2.Items.Contains(sensorName))
+                {
+                    comboBox2.Items.Add(sensorName);
+                }
+            }
+        }
 
 
 
@@ -198,6 +219,12 @@ namespace Licenta
             UpdateUser();
         }
 
+        private void UpdateSenzorData(object sender, EventArgs e)
+        {
+            UpdateSenzorData();
+            UpdateLabels();
+        }
+
         void Refresh()
         {
             flowLayoutPanel1.Controls.Clear();
@@ -227,11 +254,116 @@ namespace Licenta
 
         private void button1_Click(object sender, EventArgs e)
         {
-            // Creează o instanță a clasei Dashboard
-            WidgetPanel loadform = new WidgetPanel();
+            if (comboBox1.SelectedItem != null && comboBox2.SelectedItem != null)
+            {
+                string selectedText1 = comboBox1.SelectedItem.ToString();
+                string selectedText2 = comboBox2.SelectedItem.ToString();
+                if (selectedText1 == "Text UltimaDataPrimita")
+                {
+                    TextLabel(selectedText2);
+                }
+            }
+        }
 
-            // Afișează formularul Dashboard
-            loadform.Show();
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void DataAndTIme_Tick(object sender, EventArgs e)
+        {
+            UpdateDateTime();
+        }
+
+        private void UpdateDateTime()
+        {
+            // Set the text of the label to the current date and time
+            DataTime.Text = DateTime.Now.ToString("dddd, dd MMMM yyyy");
+            Time.Text = DateTime.Now.ToString("HH:mm:ss");
+        }
+
+        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+    
+        }
+
+        private void TextLabel(string sensorName)
+        {
+            Panel currentPanel = MainDashboard.Controls.OfType<Panel>().FirstOrDefault(panel => panel.Visible);
+
+            if (currentPanel != null)
+            {
+                Dictionary<string, List<string>> sensorData = server.GetSenzorData();
+                if (sensorData.ContainsKey(sensorName))
+                {
+                    Label sensorLabel = new Label
+                    {
+                        Text = $" {sensorName}: {sensorData[sensorName].Last()}",
+                        AutoSize = true,
+                        BackColor = Color.Transparent,
+                        Location = new Point(10, 10), // Default location; can be adjusted as needed
+                        Size = new Size(90, 20), // Dimensiunea label-ului
+                        Font = new Font(Font, FontStyle.Bold),
+                    };
+
+                    // Add mouse event handlers for moving the label
+                    sensorLabel.MouseDown += SensorLabel_MouseDown;
+                    sensorLabel.MouseMove += SensorLabel_MouseMove;
+                    sensorLabel.MouseUp += SensorLabel_MouseUp;
+
+                    currentPanel.Controls.Add(sensorLabel);
+                }
+            }
+        }
+
+        private bool isDragging = false;
+        private Point startPoint = new Point(0, 0);
+
+        private void SensorLabel_MouseDown(object sender, MouseEventArgs e)
+        {
+            isDragging = true;
+            startPoint = new Point(e.X, e.Y);
+        }
+
+        private void SensorLabel_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (isDragging)
+            {
+                Label lbl = sender as Label;
+                lbl.Location = new Point(lbl.Location.X + e.X - startPoint.X, lbl.Location.Y + e.Y - startPoint.Y);
+            }
+        }
+
+        private void SensorLabel_MouseUp(object sender, MouseEventArgs e)
+        {
+            isDragging = false;
+        }
+        private void UpdateLabels()
+        {
+            Dictionary<string, List<string>> sensorData = server.GetSenzorData();
+
+            foreach (Control control in MainDashboard.Controls)
+            {
+                if (control is Panel panel)
+                {
+                    foreach (Control innerControl in panel.Controls)
+                    {
+                        if (innerControl is Label lbl)
+                        {
+                            string sensorName = lbl.Text.Split(':')[0];
+                            if (sensorData.ContainsKey(sensorName))
+                            {
+                                lbl.Text = $"{sensorName}: {string.Join(", ", sensorData[sensorName])}";
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }

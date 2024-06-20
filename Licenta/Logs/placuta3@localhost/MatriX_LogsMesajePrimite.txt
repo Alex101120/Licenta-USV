@@ -22,3 +22,15 @@ Date: 17.06.2024
 13:22:17: Am primit mesajul 'Online' Primit de la placuta3@localhost/MatriX
 13:22:19: Am primit mesajul 'SenzorA/6' Primit de la placuta3@localhost/MatriX
 13:22:25: Am primit mesajul 'SenzorA/6' Primit de la placuta3@localhost/MatriX
+Date: 20.06.2024
+12:35:49: Am primit mesajul 'Online' Primit de la placuta3@localhost/MatriX
+12:35:57: Am primit mesajul 'SenzorA/2' Primit de la placuta3@localhost/MatriX
+12:36:01: Am primit mesajul 'SenzorA/2' Primit de la placuta3@localhost/MatriX
+12:36:21: Am primit mesajul 'SenzorB/2' Primit de la placuta3@localhost/MatriX
+12:36:25: Am primit mesajul 'SenzorB/2' Primit de la placuta3@localhost/MatriX
+12:38:39: Am primit mesajul 'Online' Primit de la placuta3@localhost/MatriX
+12:39:03: Am primit mesajul 'SenzorB/2' Primit de la placuta3@localhost/MatriX
+12:39:06: Am primit mesajul 'SenzorB/2' Primit de la placuta3@localhost/MatriX
+12:39:21: Am primit mesajul 'Online' Primit de la placuta3@localhost/MatriX
+12:39:39: Am primit mesajul 'SenzorB/2' Primit de la placuta3@localhost/MatriX
+12:39:41: Am primit mesajul 'SenzorB/2' Primit de la placuta3@localhost/MatriX

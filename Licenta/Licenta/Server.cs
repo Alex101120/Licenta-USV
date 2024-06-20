@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Matrix.Xmpp.Roster;
 using static Licenta.DashBoard;
-using static Licenta.WidgetPanel;
+
 using System.Linq;
 using System.Timers;
 
@@ -25,7 +25,7 @@ namespace Licenta
         private Dictionary<string, Timer> userTimers = new Dictionary<string, Timer>();
         private const double timeoutInterval = 300000;
         Dictionary<string, List<string>> sensorData = new Dictionary<string, List<string>>();
-        WidgetPanel widgetpanel;
+        
         string sensorName;
 
 
@@ -137,9 +137,9 @@ namespace Licenta
            
             
         }
-        public String GetVariableName()
+        public Dictionary<string, List<string>> GetSenzorData()
         {
-            return sensorName;
+            return sensorData;
         }
 
         public List<User> GetActiveUsers()
@@ -258,6 +258,7 @@ namespace Licenta
                 WriteTextToFile("Log.txt", $"Utilizatorul {username} a fost setat ca inactiv.");
             }
         }
+
 
     }
 }

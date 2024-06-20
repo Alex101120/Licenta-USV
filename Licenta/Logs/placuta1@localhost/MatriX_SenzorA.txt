@@ -1,0 +1,26 @@
+Date: 20.06.2024
+11:53:13: Valoarea pentru SenzorA: 5
+11:53:18: Valoarea pentru SenzorA: 5
+12:05:21: Valoarea pentru SenzorA: 5
+12:07:08: Valoarea pentru SenzorA: 5
+12:12:57: Valoarea pentru SenzorA: 5
+12:14:03: Valoarea pentru SenzorA: 5
+12:15:41: Valoarea pentru SenzorA: 5
+12:15:46: Valoarea pentru SenzorA: 5
+12:15:53: Valoarea pentru SenzorA: 5
+12:16:00: Valoarea pentru SenzorA: 5
+12:16:01: Valoarea pentru SenzorA: 5
+12:16:01: Valoarea pentru SenzorA: 5
+12:16:02: Valoarea pentru SenzorA: 5
+12:16:02: Valoarea pentru SenzorA: 5
+12:16:02: Valoarea pentru SenzorA: 5
+12:17:17: Valoarea pentru SenzorA: 5
+12:17:22: Valoarea pentru SenzorA: 5
+12:17:25: Valoarea pentru SenzorA: 5
+12:17:28: Valoarea pentru SenzorA: 5
+12:17:30: Valoarea pentru SenzorA: 5
+12:17:30: Valoarea pentru SenzorA: 5
+12:17:31: Valoarea pentru SenzorA: 5
+12:17:31: Valoarea pentru SenzorA: 5
+12:17:31: Valoarea pentru SenzorA: 5
+12:17:32: Valoarea pentru SenzorA: 5
