@@ -9,12 +9,15 @@ using System.Windows.Forms.DataVisualization.Charting;
 using LiveCharts;
 using LiveCharts.Charts;
 using LiveCharts.Defaults;
+using LiveCharts.WinForms;
 
 namespace Licenta
 {
     public partial class DashBoard : Form
     {
         Server server;
+        private bool isDraggingChart = false;
+        private Point chartStartPoint = Point.Empty;
 
         public DashBoard()
         {
@@ -28,9 +31,8 @@ namespace Licenta
 
 
             comboBox1.Items.Add("Text UltimaDataPrimita");
-            comboBox1.Items.Add("Text UltimileDatePrimite");
-            comboBox1.Items.Add("Text UltimaDataPrimita");
-            comboBox1.Items.Add("Basic Chart");
+            comboBox1.Items.Add("ChartLine");
+            comboBox1.Items.Add("AngularGaugeChart");
 
         }
 
@@ -227,10 +229,14 @@ namespace Licenta
                    
                     TextLabel(selectedText2);
                 }
-                if (selectedText1 == "Basic Chart")
+                if (selectedText1 == "ChartLine")
                 {
                     
-                    BasicChart(selectedText2);
+                    LineChart(selectedText2);
+                }
+                if(selectedText1 == "AngularGaugeChart")
+                {
+                    AngularGaugeChart(selectedText2);
                 }
             }
         }
@@ -291,9 +297,8 @@ namespace Licenta
             }
         }
 
-        private void BasicChart(string sensorName)
+        private void LineChart(string sensorName)
         {
-            // Get the current visible panel
             Panel currentPanel = MainDashboard.Controls.OfType<Panel>().FirstOrDefault(panel => panel.Visible);
 
             if (currentPanel != null)
@@ -301,14 +306,14 @@ namespace Licenta
                 Dictionary<string, List<string>> sensorData = server.GetSenzorData();
                 if (sensorData.ContainsKey(sensorName))
                 {
-                    // Create a new LiveCharts cartesian chart
                     LiveCharts.WinForms.CartesianChart chart = new LiveCharts.WinForms.CartesianChart
                     {
-                        Dock = DockStyle.Fill,
-                        Name = $"{sensorName}_Chart"
+                        Size = new Size(200, 200),
+                        Name = $"{sensorName}_Chart",
+                        Location = new Point(333, 333),
+                        
                     };
 
-                    // Create a new line series with sensor data
                     LiveCharts.Wpf.LineSeries lineSeries = new LiveCharts.Wpf.LineSeries
                     {
                         Title = sensorName,
@@ -316,11 +321,8 @@ namespace Licenta
                         PointGeometry = null
                     };
 
-                    // Clear existing series and add new series to the chart
-                    chart.Series.Clear();
-                    chart.Series.Add(lineSeries);
+                    chart.Series = new LiveCharts.SeriesCollection { lineSeries };
 
-                    // Customize the chart's appearance
                     chart.AxisX.Add(new LiveCharts.Wpf.Axis
                     {
                         Title = "Time",
@@ -332,17 +334,77 @@ namespace Licenta
                         Title = "Value"
                     });
 
-                    // Remove any existing chart in the current panel
+                    chart.MouseDown += Chart_MouseDown;
+                    chart.MouseMove += Chart_MouseMove;
+                    chart.MouseUp += Chart_MouseUp;
+
                     var existingChart = currentPanel.Controls.OfType<LiveCharts.WinForms.CartesianChart>().FirstOrDefault();
                     if (existingChart != null)
                     {
                         currentPanel.Controls.Remove(existingChart);
                     }
 
-                    // Add the new chart to the current panel
                     currentPanel.Controls.Add(chart);
                 }
             }
+        }
+
+        private void AngularGaugeChart(string sensorName)
+        {
+            Panel currentPanel = MainDashboard.Controls.OfType<Panel>().FirstOrDefault(panel => panel.Visible);
+
+            if (currentPanel != null)
+            {
+                Dictionary<string, List<string>> sensorData = server.GetSenzorData();
+                if (sensorData.ContainsKey(sensorName))
+                {
+                    LiveCharts.WinForms.AngularGauge angularGauge = new LiveCharts.WinForms.AngularGauge
+                    {
+                        Size = new Size(200, 200),
+                        Name = $"{sensorName}_AngularGauge",
+                        Value = double.Parse(sensorData[sensorName].Last()),
+                        FromValue = 0, // Set the starting value of the gauge
+                        ToValue = 100, // Set the maximum value of the gauge
+                        TicksForeground = System.Windows.Media.Brushes.Gray,
+                        Location = new Point(0, 333),
+                        BackColor = Color.White,
+                       
+                    };
+
+                    angularGauge.MouseDown += Chart_MouseDown;
+                    angularGauge.MouseMove += Chart_MouseMove;
+                    angularGauge.MouseUp += Chart_MouseUp;
+
+                    var existingGauge = currentPanel.Controls.OfType<LiveCharts.WinForms.AngularGauge>().FirstOrDefault();
+                    if (existingGauge != null)
+                    {
+                        currentPanel.Controls.Remove(existingGauge);
+                    }
+
+                    currentPanel.Controls.Add(angularGauge);
+                }
+            }
+        }
+
+        private void Chart_MouseDown(object sender, MouseEventArgs e)
+        {
+            isDraggingChart = true;
+            startPoint = new Point(e.X, e.Y);
+            Console.WriteLine("Se Incearca Mutarea");
+        }
+
+        private void Chart_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (isDragging)
+            {
+                LiveCharts.WinForms.PieChart chart = sender as LiveCharts.WinForms.PieChart;
+                chart.Location = new Point(chart.Location.X + e.X - startPoint.X, chart.Location.Y + e.Y - startPoint.Y);
+            }
+        }
+
+        private void Chart_MouseUp(object sender, MouseEventArgs e)
+        {
+            isDraggingChart = false;
         }
 
         private bool isDragging = false;
@@ -395,37 +457,40 @@ namespace Licenta
         {
             foreach (Panel panel in MainDashboard.Controls.OfType<Panel>())
             {
-                Chart chart = panel.Controls.OfType<Chart>().FirstOrDefault();
-                if (chart != null)
+                // Verificăm și actualizăm CartesianChart
+                CartesianChart cartesianChart = panel.Controls.OfType<CartesianChart>().FirstOrDefault();
+                if (cartesianChart != null)
                 {
-                    // Găsește numele senzorului asociat graficului
-                    string sensorName = chart.Name.Replace("_Chart", "");
-
-                    // Curăță toate seriile graficului
-                    chart.Series.Clear();
-
-                    // Creează o nouă serie pentru datele senzorului specificat
-                    Series series = new Series(sensorName);
-                    series.ChartType = SeriesChartType.Line; // Tipul de grafic (linie)
-
-                    // Adaugă datele senzorului la seria graficului
+                    string sensorName = cartesianChart.Name.Replace("_Chart", "");
                     Dictionary<string, List<string>> sensorData = server.GetSenzorData();
                     if (sensorData.ContainsKey(sensorName))
                     {
-                        foreach (var value in sensorData[sensorName])
+                        var lineSeries = cartesianChart.Series[0] as LiveCharts.Wpf.LineSeries;
+                        if (lineSeries != null)
                         {
-                            series.Points.AddY(Convert.ToDouble(value));
+                            lineSeries.Values.Clear();
+                            lineSeries.Values.AddRange(sensorData[sensorName].Select(value => (object)double.Parse(value)).ToList());
                         }
                     }
+                }
 
-                    // Adaugă seria actualizată la grafic
-                    chart.Series.Add(series);
+                // Verificăm și actualizăm AngularGauge
+                LiveCharts.WinForms.AngularGauge angularGauge = panel.Controls.OfType<LiveCharts.WinForms.AngularGauge>().FirstOrDefault();
+                if (angularGauge != null)
+                {
+                    string sensorName = angularGauge.Name.Replace("_AngularGauge", "");
+                    Dictionary<string, List<string>> sensorData = server.GetSenzorData();
+                    if (sensorData.ContainsKey(sensorName))
+                    {
+                        angularGauge.Value = double.Parse(sensorData[sensorName].Last());
+                    }
                 }
             }
         }
 
-       
-       
-        
+        private void chart1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

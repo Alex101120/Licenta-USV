@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            Matrix.IO.Cache.MemoryStorage<Matrix.Xmpp.Disco.Info> memoryStorage_12 = new Matrix.IO.Cache.MemoryStorage<Matrix.Xmpp.Disco.Info>();
+            Matrix.IO.Cache.MemoryStorage<Matrix.Xmpp.Disco.Info> memoryStorage_11 = new Matrix.IO.Cache.MemoryStorage<Matrix.Xmpp.Disco.Info>();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.Adauga = new System.Windows.Forms.Button();
             this.discoManager1 = new Matrix.Xmpp.Client.DiscoManager();
@@ -68,7 +68,7 @@
             this.discoManager1.AutoDiscover = false;
             this.discoManager1.AutoReplyToDiscoInfo = false;
             this.discoManager1.AutoSendCaps = false;
-            this.discoManager1.CapsStorage = memoryStorage_12;
+            this.discoManager1.CapsStorage = memoryStorage_11;
             this.discoManager1.Node = null;
             this.discoManager1.XmppClient = null;
             // 
