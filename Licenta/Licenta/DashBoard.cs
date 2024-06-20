@@ -5,6 +5,10 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
+using LiveCharts;
+using LiveCharts.Charts;
+using LiveCharts.Defaults;
 
 namespace Licenta
 {
@@ -26,6 +30,7 @@ namespace Licenta
             comboBox1.Items.Add("Text UltimaDataPrimita");
             comboBox1.Items.Add("Text UltimileDatePrimite");
             comboBox1.Items.Add("Text UltimaDataPrimita");
+            comboBox1.Items.Add("Basic Chart");
 
         }
 
@@ -97,7 +102,10 @@ namespace Licenta
                     // Populate the panel with controls as needed
                     Label userLabel = new Label
                     {
-                        Text = $"User Info for {user.Username}",
+                        Text = $"Panou de Comanda pentru {user.Username}",
+                        TextAlign = ContentAlignment.TopCenter,
+                        Size = new Size(90, 20), // Dimensiunea label-ului
+                        Font = new Font(Font, FontStyle.Bold),
                         AutoSize = true
                     };
                     userPanel.Controls.Add(userLabel);
@@ -167,18 +175,12 @@ namespace Licenta
         }
 
 
-
-
-
         private void flowLayoutPanel1_Paint(object sender, PaintEventArgs e)
         {
 
         }
 
-        private void vScrollBar1_Scroll(object sender, ScrollEventArgs e)
-        {
-
-        }
+       
 
         public class User
         {
@@ -186,33 +188,7 @@ namespace Licenta
             public bool IsActive { get; set; }
         }
 
-        private void button2_Click(object sender, EventArgs e)
-        {
-            GroupBox groupBox = new GroupBox();
-            groupBox.Name = "localhost";
-            PictureBox pictureBox = new PictureBox();
-
-            pictureBox.Size = new Size(280, 150);
-            pictureBox.Image = Image.FromFile(@"D:\Licenta\Licenta-USV\Licenta\Assets\download.jpg");
-            pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
-
-            RadioButton radioButton = new RadioButton
-            {
-                Name = "localhost",
-                Text = "localhost",
-                Size = new Size(100, 40), 
-                AutoSize = false,
-            };
-
-          
-            radioButton.CheckedChanged += RadioButton_CheckedChanged;
-
-          
-            groupBox.Controls.Add(radioButton);
-            groupBox.Controls.Add(pictureBox);
-
-            flowLayoutPanel1.Controls.Add(groupBox);
-        }
+       
 
         private void OnUsersUpdated(object sender, EventArgs e)
         {
@@ -223,6 +199,7 @@ namespace Licenta
         {
             UpdateSenzorData();
             UpdateLabels();
+            UpdateAllCharts();
         }
 
         void Refresh()
@@ -230,20 +207,7 @@ namespace Licenta
             flowLayoutPanel1.Controls.Clear();
         }
 
-        private void radioButton1_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void flowLayoutPanel2_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
+       
 
         
 
@@ -260,7 +224,13 @@ namespace Licenta
                 string selectedText2 = comboBox2.SelectedItem.ToString();
                 if (selectedText1 == "Text UltimaDataPrimita")
                 {
+                   
                     TextLabel(selectedText2);
+                }
+                if (selectedText1 == "Basic Chart")
+                {
+                    
+                    BasicChart(selectedText2);
                 }
             }
         }
@@ -321,6 +291,60 @@ namespace Licenta
             }
         }
 
+        private void BasicChart(string sensorName)
+        {
+            // Get the current visible panel
+            Panel currentPanel = MainDashboard.Controls.OfType<Panel>().FirstOrDefault(panel => panel.Visible);
+
+            if (currentPanel != null)
+            {
+                Dictionary<string, List<string>> sensorData = server.GetSenzorData();
+                if (sensorData.ContainsKey(sensorName))
+                {
+                    // Create a new LiveCharts cartesian chart
+                    LiveCharts.WinForms.CartesianChart chart = new LiveCharts.WinForms.CartesianChart
+                    {
+                        Dock = DockStyle.Fill,
+                        Name = $"{sensorName}_Chart"
+                    };
+
+                    // Create a new line series with sensor data
+                    LiveCharts.Wpf.LineSeries lineSeries = new LiveCharts.Wpf.LineSeries
+                    {
+                        Title = sensorName,
+                        Values = new LiveCharts.ChartValues<double>(sensorData[sensorName].Select(double.Parse).ToList()),
+                        PointGeometry = null
+                    };
+
+                    // Clear existing series and add new series to the chart
+                    chart.Series.Clear();
+                    chart.Series.Add(lineSeries);
+
+                    // Customize the chart's appearance
+                    chart.AxisX.Add(new LiveCharts.Wpf.Axis
+                    {
+                        Title = "Time",
+                        Labels = sensorData[sensorName].Select((s, index) => index.ToString()).ToArray()
+                    });
+
+                    chart.AxisY.Add(new LiveCharts.Wpf.Axis
+                    {
+                        Title = "Value"
+                    });
+
+                    // Remove any existing chart in the current panel
+                    var existingChart = currentPanel.Controls.OfType<LiveCharts.WinForms.CartesianChart>().FirstOrDefault();
+                    if (existingChart != null)
+                    {
+                        currentPanel.Controls.Remove(existingChart);
+                    }
+
+                    // Add the new chart to the current panel
+                    currentPanel.Controls.Add(chart);
+                }
+            }
+        }
+
         private bool isDragging = false;
         private Point startPoint = new Point(0, 0);
 
@@ -329,6 +353,7 @@ namespace Licenta
             isDragging = true;
             startPoint = new Point(e.X, e.Y);
         }
+
 
         private void SensorLabel_MouseMove(object sender, MouseEventArgs e)
         {
@@ -358,12 +383,49 @@ namespace Licenta
                             string sensorName = lbl.Text.Split(':')[0];
                             if (sensorData.ContainsKey(sensorName))
                             {
-                                lbl.Text = $"{sensorName}: {string.Join(", ", sensorData[sensorName])}";
+                                lbl.Text = $" {sensorName}: {sensorData[sensorName].Last()}";
                             }
                         }
                     }
                 }
             }
         }
+
+        private void UpdateAllCharts()
+        {
+            foreach (Panel panel in MainDashboard.Controls.OfType<Panel>())
+            {
+                Chart chart = panel.Controls.OfType<Chart>().FirstOrDefault();
+                if (chart != null)
+                {
+                    // Găsește numele senzorului asociat graficului
+                    string sensorName = chart.Name.Replace("_Chart", "");
+
+                    // Curăță toate seriile graficului
+                    chart.Series.Clear();
+
+                    // Creează o nouă serie pentru datele senzorului specificat
+                    Series series = new Series(sensorName);
+                    series.ChartType = SeriesChartType.Line; // Tipul de grafic (linie)
+
+                    // Adaugă datele senzorului la seria graficului
+                    Dictionary<string, List<string>> sensorData = server.GetSenzorData();
+                    if (sensorData.ContainsKey(sensorName))
+                    {
+                        foreach (var value in sensorData[sensorName])
+                        {
+                            series.Points.AddY(Convert.ToDouble(value));
+                        }
+                    }
+
+                    // Adaugă seria actualizată la grafic
+                    chart.Series.Add(series);
+                }
+            }
+        }
+
+       
+       
+        
     }
 }

@@ -48,14 +48,14 @@
             this.flowLayoutPanel1.AutoScroll = true;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(217, 448);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(217, 525);
             this.flowLayoutPanel1.TabIndex = 0;
             this.flowLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.flowLayoutPanel1_Paint);
             // 
             // Adauga
             // 
             this.Adauga.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Adauga.Location = new System.Drawing.Point(807, 399);
+            this.Adauga.Location = new System.Drawing.Point(844, 483);
             this.Adauga.Name = "Adauga";
             this.Adauga.Size = new System.Drawing.Size(112, 33);
             this.Adauga.TabIndex = 0;
@@ -76,25 +76,25 @@
             // 
             this.MainDashboard.Location = new System.Drawing.Point(223, 0);
             this.MainDashboard.Name = "MainDashboard";
-            this.MainDashboard.Size = new System.Drawing.Size(578, 448);
+            this.MainDashboard.Size = new System.Drawing.Size(578, 525);
             this.MainDashboard.TabIndex = 1;
             this.MainDashboard.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint_1);
             // 
             // comboBox1
             // 
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(807, 372);
+            this.comboBox1.Location = new System.Drawing.Point(813, 456);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(114, 21);
+            this.comboBox1.Size = new System.Drawing.Size(163, 21);
             this.comboBox1.TabIndex = 2;
             this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // comboBox2
             // 
             this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(807, 325);
+            this.comboBox2.Location = new System.Drawing.Point(813, 409);
             this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(114, 21);
+            this.comboBox2.Size = new System.Drawing.Size(163, 21);
             this.comboBox2.TabIndex = 0;
             this.comboBox2.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged);
             // 
@@ -102,7 +102,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(809, 302);
+            this.label1.Location = new System.Drawing.Point(844, 386);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(112, 20);
             this.label1.TabIndex = 3;
@@ -112,7 +112,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(827, 349);
+            this.label2.Location = new System.Drawing.Point(863, 433);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(72, 20);
             this.label2.TabIndex = 4;
@@ -148,7 +148,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(926, 450);
+            this.ClientSize = new System.Drawing.Size(988, 528);
             this.Controls.Add(this.Time);
             this.Controls.Add(this.DataTime);
             this.Controls.Add(this.label2);

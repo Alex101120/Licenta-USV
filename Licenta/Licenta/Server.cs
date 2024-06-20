@@ -253,9 +253,11 @@ namespace Licenta
             var user = activeUsers.FirstOrDefault(u => u.Username == username);
             if (user != null)
             {
+                string baseLogPath = @"D:\Licenta\Licenta-USV\Licenta\Logs";
+                string BasicLog = Path.Combine(baseLogPath, $"BasicLog.txt");
                 user.IsActive = false;
                 UsersUpdated?.Invoke(this, EventArgs.Empty);
-                WriteTextToFile("Log.txt", $"Utilizatorul {username} a fost setat ca inactiv.");
+                WriteTextToFile(BasicLog, $"Utilizatorul {username} a fost setat ca inactiv.");
             }
         }
 
