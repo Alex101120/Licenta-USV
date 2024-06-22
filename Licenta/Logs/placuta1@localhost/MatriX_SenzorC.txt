@@ -1,0 +1,16 @@
+Date: 22.06.2024
+14:53:35: Valoarea pentru SenzorC: 22
+14:53:48: Valoarea pentru SenzorC: 11
+14:53:53: Valoarea pentru SenzorC: 11
+14:55:19: Valoarea pentru SenzorC: 11
+14:55:23: Valoarea pentru SenzorC: 11
+14:55:41: Valoarea pentru SenzorC: 12
+14:55:52: Valoarea pentru SenzorC: 13
+14:56:01: Valoarea pentru SenzorC: 13
+14:59:40: Valoarea pentru SenzorC: 13
+14:59:44: Valoarea pentru SenzorC: 13
+14:59:45: Valoarea pentru SenzorC: 13
+15:00:06: Valoarea pentru SenzorC: 13
+15:02:04: Valoarea pentru SenzorC: 13
+15:02:06: Valoarea pentru SenzorC: 13
+15:02:11: Valoarea pentru SenzorC: 13

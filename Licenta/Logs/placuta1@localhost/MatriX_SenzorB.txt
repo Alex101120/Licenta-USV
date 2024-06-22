@@ -3,3 +3,9 @@ Date: 20.06.2024
 17:39:12: Valoarea pentru SenzorB: 55
 18:41:41: Valoarea pentru SenzorB: 55
 18:41:43: Valoarea pentru SenzorB: 55
+Date: 22.06.2024
+14:44:34: Valoarea pentru SenzorB: 22
+14:44:35: Valoarea pentru SenzorB: 22
+14:47:22: Valoarea pentru SenzorB: 22
+14:51:10: Valoarea pentru SenzorB: 22
+14:53:33: Valoarea pentru SenzorB: 22

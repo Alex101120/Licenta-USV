@@ -9,20 +9,21 @@ using static Licenta.DashBoard;
 
 using System.Linq;
 using System.Timers;
+using System.Windows.Forms;
 
 namespace Licenta
 {
     internal class Server
     {
         public XmppClient client;
-        
+        public bool error = false;
         public string Destinatar;
         public string Mesaj;
         public List<User> activeUsers = new List<User>();
         public event EventHandler UsersUpdated;
         public event EventHandler MesajPrimit;
 
-        private Dictionary<string, Timer> userTimers = new Dictionary<string, Timer>();
+        private Dictionary<string, System.Timers.Timer> userTimers = new Dictionary<string, System.Timers.Timer>();
         private const double timeoutInterval = 300000;
         Dictionary<string, List<string>> sensorData = new Dictionary<string, List<string>>();
         
@@ -34,11 +35,12 @@ namespace Licenta
 
         public Server()
         {
+            AuthFrom authFrom = new AuthFrom();
             client = new XmppClient
             {
                 XmppDomain = "localhost", // Domeniul serverului XMPP
-                Username = "admin", // Numele de utilizator pentru aplicația ta
-                Password = "admin", // Parola utilizatorului
+                Username = authFrom.GetUsername(), // Numele de utilizator pentru aplicația ta
+                Password = authFrom.GetPassword(), // Parola utilizatorului
                 Resource = "CSharpApp" // O resursă opțională pentru identificarea sesiunii
                 
                 
@@ -73,7 +75,7 @@ namespace Licenta
                     string[] parts = mesaj.Split('/');
                     if (parts.Length == 2)
                     {
-                        MesajPrimit?.Invoke(this, EventArgs.Empty);
+                        
                         sensorName = parts[0]; // Exemplu: "SenzorA"
                         string sensorValue = parts[1]; // Exemplu: "6"
                         Debug.WriteLine($"{sensorName}: {sensorValue}");
@@ -89,6 +91,7 @@ namespace Licenta
                         sensorData[sensorName].Add(sensorValue);
                        
                         WriteSensorDataToFile(destinatar, sensorName, sensorValue);
+                        MesajPrimit?.Invoke(this, EventArgs.Empty);
                     }
                     
                 }
@@ -126,12 +129,24 @@ namespace Licenta
             client.OnError += (sender, e) =>
             {
                 Debug.WriteLine($"Error: {e.Exception}");
+                var result = MessageBox.Show("Eroare  " + e.Exception, "Exit Confirmation", MessageBoxButtons.OK);
+                if (result == DialogResult.OK)
+                {
+                    Application.Exit();
+                }
             };
 
             // Abonează-te la evenimentul OnAuthError pentru a gestiona erorile de autentificare
             client.OnAuthError += (sender, e) =>
             {
-                Debug.WriteLine("Authentication Error: " + e.Failure);
+                error = true;
+                Debug.WriteLine("Eroare la autentificare: " + e.Failure);
+
+                var result = MessageBox.Show("Eroare la autentificare: " + e.Failure, "Exit Confirmation", MessageBoxButtons.OK);
+                if (result == DialogResult.OK)
+                {
+                    Application.Exit();
+                }
             };
 
            
@@ -166,7 +181,7 @@ namespace Licenta
         {
             if (client != null)
             {
-                client.Send(new Message
+                client.Send(new Matrix.Xmpp.Client.Message
                 {
                     To = to,
                     Body = messageBody,
@@ -240,7 +255,7 @@ namespace Licenta
             }
             else
             {
-                Timer timer = new Timer(timeoutInterval);
+                System.Timers.Timer timer = new System.Timers.Timer(timeoutInterval);
                 timer.Elapsed += (sender, e) => SetUserInactive(username);
                 timer.AutoReset = false;
                 timer.Start();

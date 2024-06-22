@@ -27,14 +27,19 @@ namespace Licenta
             server.MesajPrimit += UpdateSenzorData;
             server.ConnectToServer();
             UpdateDateTime();
+            this.FormClosing += new FormClosingEventHandler(Dashboard_FormClosing);
 
 
 
-            comboBox1.Items.Add("Text UltimaDataPrimita");
+            
+            comboBox1.Items.Add("SingleTestView");
+            comboBox1.Items.Add("MultiTextView");
+            comboBox1.Items.Add("ListView");
             comboBox1.Items.Add("ChartLine");
             comboBox1.Items.Add("AngularGaugeChart");
 
         }
+
 
         void UpdateUser()
         {
@@ -71,6 +76,7 @@ namespace Licenta
                     {
                         Name = user.Username,
                         Text = user.Username,
+                        BackColor = Color.Transparent,
                         Size = new Size(100, 40),
                         AutoCheck = true,
                         AutoSize = false
@@ -199,9 +205,11 @@ namespace Licenta
 
         private void UpdateSenzorData(object sender, EventArgs e)
         {
-            UpdateSenzorData();
-            UpdateLabels();
+            UpdateSingleLabel();
             UpdateAllCharts();
+            UpdateMultiTextLabels();
+            UpdateListViews();
+            UpdateSenzorData();
         }
 
         void Refresh()
@@ -224,10 +232,19 @@ namespace Licenta
             {
                 string selectedText1 = comboBox1.SelectedItem.ToString();
                 string selectedText2 = comboBox2.SelectedItem.ToString();
-                if (selectedText1 == "Text UltimaDataPrimita")
+                if (selectedText1 == "SingleTestView")
                 {
                    
-                    TextLabel(selectedText2);
+                    SingleTextLabel(selectedText2);
+                }
+                if(selectedText1 == "MultiTextView")
+                {
+                    MultiTextLabel(selectedText2);
+                }
+                if(selectedText1 == "ListView")
+                {
+                    
+                    ListViewCreate(selectedText2);
                 }
                 if (selectedText1 == "ChartLine")
                 {
@@ -237,6 +254,15 @@ namespace Licenta
                 if(selectedText1 == "AngularGaugeChart")
                 {
                     AngularGaugeChart(selectedText2);
+                }
+                
+            }
+            else
+            {
+                var result = MessageBox.Show("Toate optiunile trebuie completate! " , "Iesire", MessageBoxButtons.OK);
+                if (result == DialogResult.OK)
+                {
+                    
                 }
             }
         }
@@ -268,7 +294,7 @@ namespace Licenta
     
         }
 
-        private void TextLabel(string sensorName)
+        private void SingleTextLabel(string sensorName)
         {
             Panel currentPanel = MainDashboard.Controls.OfType<Panel>().FirstOrDefault(panel => panel.Visible);
 
@@ -277,25 +303,154 @@ namespace Licenta
                 Dictionary<string, List<string>> sensorData = server.GetSenzorData();
                 if (sensorData.ContainsKey(sensorName))
                 {
-                    Label sensorLabel = new Label
+                    Label sensorLabel = currentPanel.Controls.OfType<Label>().FirstOrDefault(lbl => lbl.Name == $"{sensorName}_SingleTextLabel");
+                    if (sensorLabel == null)
                     {
-                        Text = $" {sensorName}: {sensorData[sensorName].Last()}",
-                        AutoSize = true,
-                        BackColor = Color.Transparent,
-                        Location = new Point(10, 10), // Default location; can be adjusted as needed
-                        Size = new Size(90, 20), // Dimensiunea label-ului
-                        Font = new Font(Font, FontStyle.Bold),
-                    };
+                        sensorLabel = new Label
+                        {
+                            Name = $"{sensorName}_SingleTextLabel", // Unique name for identification
+                            Text = $" {sensorName}: {sensorData[sensorName].Last()}",
+                            AutoSize = true,
+                            BackColor = Color.Transparent,
+                            Location = new Point(10, 10), // Default location; can be adjusted as needed
+                            Size = new Size(90, 20),
+                            Font = new Font(Font, FontStyle.Bold),
+                        };
 
-                    // Add mouse event handlers for moving the label
-                    sensorLabel.MouseDown += SensorLabel_MouseDown;
-                    sensorLabel.MouseMove += SensorLabel_MouseMove;
-                    sensorLabel.MouseUp += SensorLabel_MouseUp;
+                        // Add mouse event handlers for moving the label
+                        sensorLabel.MouseDown += SensorLabel_MouseDown;
+                        sensorLabel.MouseMove += SensorLabel_MouseMove;
+                        sensorLabel.MouseUp += SensorLabel_MouseUp;
+                        sensorLabel.MouseClick += SensorLabel_MouseClick;
 
-                    currentPanel.Controls.Add(sensorLabel);
+                        currentPanel.Controls.Add(sensorLabel);
+                    }
+                    else
+                    {
+                        sensorLabel.Text = $" {sensorName}: {sensorData[sensorName].Last()}";
+                    }
+                }
+            }
+            else
+            {
+                var result = MessageBox.Show("Selecteaza un tabel ", "Iesire", MessageBoxButtons.OK);
+                if (result == DialogResult.OK)
+                {
+
                 }
             }
         }
+
+        private void MultiTextLabel(string sensorName)
+        {
+            Panel currentPanel = MainDashboard.Controls.OfType<Panel>().FirstOrDefault(panel => panel.Visible);
+
+            if (currentPanel != null)
+            {
+                Dictionary<string, List<string>> sensorData = server.GetSenzorData();
+                if (sensorData.ContainsKey(sensorName))
+                {
+                    List<string> recentData = sensorData[sensorName].Skip(Math.Max(0, sensorData[sensorName].Count - 5)).ToList();
+                    recentData.Reverse();
+                    string labelText = $"{sensorName}: {string.Join(", ", recentData)}";
+
+                    Label sensorLabel = currentPanel.Controls.OfType<Label>().FirstOrDefault(lbl => lbl.Name == $"{sensorName}_MultiTextLabel");
+                    if (sensorLabel == null)
+                    {
+                        sensorLabel = new Label
+                        {
+                            Name = $"{sensorName}_MultiTextLabel", // Unique name for identification
+                            Text = labelText,
+                            AutoSize = true,
+                            BackColor = Color.Transparent,
+                            Location = new Point(10, 10),
+                            Size = new Size(90, 20),
+                            Font = new Font(Font, FontStyle.Bold),
+                        };
+
+                        sensorLabel.MouseDown += SensorLabel_MouseDown;
+                        sensorLabel.MouseMove += SensorLabel_MouseMove;
+                        sensorLabel.MouseUp += SensorLabel_MouseUp;
+                        sensorLabel.MouseClick += SensorLabel_MouseClick;
+
+                        currentPanel.Controls.Add(sensorLabel);
+                    }
+                    else
+                    {
+                        sensorLabel.Text = labelText;
+                    }
+                }
+            }
+        }
+
+
+        private void ListViewCreate(string sensorName)
+        {
+            Panel currentPanel = MainDashboard.Controls.OfType<Panel>().FirstOrDefault(panel => panel.Visible);
+
+            if (currentPanel != null)
+            {
+                Dictionary<string, List<string>> sensorData = server.GetSenzorData();
+                if (sensorData.ContainsKey(sensorName))
+                {
+                    ListView listView = currentPanel.Controls.OfType<ListView>().FirstOrDefault(lv => lv.Name == "CombinedSensorListView");
+
+                    if (listView == null)
+                    {
+                        // Create a new ListView if it doesn't exist
+                        listView = new ListView
+                        {
+                            Name = "CombinedSensorListView",
+                            Size = new Size(400, 200), // Adjusted size for better visibility
+                            Location = new Point(10, 10),
+                            View = View.Details,
+                            FullRowSelect = true,
+                            GridLines = true
+                        };
+
+                        // Add columns for sensor name and value
+                        listView.Columns.Add("Senzor", 150); // Column for sensor name
+                        listView.Columns.Add("Data", 200); // Column for data
+
+                        listView.MouseDown += ListView_MouseDown;
+                        listView.MouseMove += ListView_MouseMove;
+                        listView.MouseUp += ListView_MouseUp;
+                        listView.MouseClick += ListView_MouseClick;
+
+                        currentPanel.Controls.Add(listView);
+                    }
+
+                    // Add or update rows in the ListView
+                    foreach (var data in sensorData[sensorName])
+                    {
+                        bool itemExists = false;
+                        foreach (ListViewItem item in listView.Items)
+                        {
+                            if (item.Text == sensorName)
+                            {
+                                item.SubItems.Add(data); // Add data under existing sensor column
+                                itemExists = true;
+                                break;
+                            }
+                        }
+
+                        if (!itemExists)
+                        {
+                            // Add new item with sensor name and data
+                            ListViewItem newItem = new ListViewItem(sensorName);
+                            newItem.SubItems.Add(data);
+                            listView.Items.Add(newItem);
+                        }
+                    }
+                }
+            }
+        }
+
+
+
+
+
+
 
         private void LineChart(string sensorName)
         {
@@ -310,7 +465,9 @@ namespace Licenta
                     {
                         Size = new Size(200, 200),
                         Name = $"{sensorName}_Chart",
-                        Location = new Point(333, 333),
+                        Location = new Point(333, 393),
+                       
+                        
                         
                     };
 
@@ -337,7 +494,8 @@ namespace Licenta
                     chart.MouseDown += Chart_MouseDown;
                     chart.MouseMove += Chart_MouseMove;
                     chart.MouseUp += Chart_MouseUp;
-
+                    chart.MouseClick += Chart_MouseClick;
+                   
                     var existingChart = currentPanel.Controls.OfType<LiveCharts.WinForms.CartesianChart>().FirstOrDefault();
                     if (existingChart != null)
                     {
@@ -374,6 +532,7 @@ namespace Licenta
                     angularGauge.MouseDown += Chart_MouseDown;
                     angularGauge.MouseMove += Chart_MouseMove;
                     angularGauge.MouseUp += Chart_MouseUp;
+                    angularGauge.MouseClick += AngularGauge_MouseClick;
 
                     var existingGauge = currentPanel.Controls.OfType<LiveCharts.WinForms.AngularGauge>().FirstOrDefault();
                     if (existingGauge != null)
@@ -430,7 +589,7 @@ namespace Licenta
         {
             isDragging = false;
         }
-        private void UpdateLabels()
+        private void UpdateSingleLabel()
         {
             Dictionary<string, List<string>> sensorData = server.GetSenzorData();
 
@@ -442,7 +601,7 @@ namespace Licenta
                     {
                         if (innerControl is Label lbl)
                         {
-                            string sensorName = lbl.Text.Split(':')[0];
+                            string sensorName = lbl.Name.Split('_')[0];
                             if (sensorData.ContainsKey(sensorName))
                             {
                                 lbl.Text = $" {sensorName}: {sensorData[sensorName].Last()}";
@@ -487,10 +646,152 @@ namespace Licenta
                 }
             }
         }
-
-        private void chart1_Click(object sender, EventArgs e)
+        private void UpdateMultiTextLabels()
         {
+            Dictionary<string, List<string>> sensorData = server.GetSenzorData();
 
+            foreach (Panel panel in MainDashboard.Controls.OfType<Panel>())
+            {
+                foreach (Control control in panel.Controls.OfType<Label>())
+                {
+                    string[] parts = control.Name.Split('_');
+                    if (parts.Length == 2 && parts[1] == "MultiTextLabel")
+                    {
+                        string sensorName = parts[0];
+                        if (sensorData.ContainsKey(sensorName))
+                        {
+                            List<string> recentData = sensorData[sensorName].Skip(Math.Max(0, sensorData[sensorName].Count - 5)).ToList();
+                            recentData.Reverse();
+                            control.Text = $"{sensorName}: {string.Join(", ", recentData)}";
+                        }
+                    }
+                }
+            }
+        }
+
+
+        private void UpdateListViews()
+        {
+            Dictionary<string, List<string>> sensorData = server.GetSenzorData();
+
+            foreach (Panel panel in MainDashboard.Controls.OfType<Panel>())
+            {
+                foreach (ListView listView in panel.Controls.OfType<ListView>())
+                {
+                    string sensorName = listView.Columns[0].Text.Replace(" Senzor", ""); // Adjusted to match "Senzor" column
+
+                    if (sensorData.ContainsKey(sensorName))
+                    {
+                        HashSet<string> existingItems = new HashSet<string>();
+
+                        foreach (ListViewItem item in listView.Items)
+                        {
+                            existingItems.Add(item.SubItems[1].Text); // Store existing data values
+                        }
+
+                        // Add new items from sensorData that are not already in the ListView
+                        foreach (var data in sensorData[sensorName])
+                        {
+                            if (!existingItems.Contains(data))
+                            {
+                                ListViewItem newItem = new ListViewItem(sensorName);
+                                newItem.SubItems.Add(data);
+                                listView.Items.Add(newItem);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+
+
+
+
+        private void ListView_MouseDown(object sender, MouseEventArgs e)
+        {
+            isDragging = true;
+            startPoint = new Point(e.X, e.Y);
+        }
+
+        private void ListView_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (isDragging)
+            {
+                ListView listView = sender as ListView;
+                listView.Location = new Point(listView.Location.X + e.X - startPoint.X, listView.Location.Y + e.Y - startPoint.Y);
+            }
+        }
+
+        private void ListView_MouseUp(object sender, MouseEventArgs e)
+        {
+            isDragging = false;
+        }
+
+        private void ListView_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left && ModifierKeys.HasFlag(Keys.Shift))
+            {
+                ListView listView = sender as ListView;
+                Panel parentPanel = listView.Parent as Panel;
+                if (parentPanel != null)
+                {
+                    parentPanel.Controls.Remove(listView);
+                }
+            }
+        }
+
+        private void AngularGauge_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left && ModifierKeys.HasFlag(Keys.Shift))
+            {
+                LiveCharts.WinForms.AngularGauge gauge = sender as LiveCharts.WinForms.AngularGauge;
+                Panel parentPanel = gauge.Parent as Panel;
+                if (parentPanel != null)
+                {
+                    parentPanel.Controls.Remove(gauge);
+                }
+            }
+        }
+        private void Chart_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left && ModifierKeys.HasFlag(Keys.Shift))
+            {
+                LiveCharts.WinForms.CartesianChart chart = sender as LiveCharts.WinForms.CartesianChart;
+                Panel parentPanel = chart.Parent as Panel;
+                if (parentPanel != null)
+                {
+                    parentPanel.Controls.Remove(chart);
+                }
+            }
+        }
+        private void SensorLabel_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left && ModifierKeys.HasFlag(Keys.Shift))
+            {
+                Label lbl = sender as Label;
+                Panel parentPanel = lbl.Parent as Panel;
+                if (parentPanel != null)
+                {
+                    parentPanel.Controls.Remove(lbl);
+                }
+            }
+        }
+        private void Dashboard_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            // Asigură-te că vrei să închizi aplicația
+
+            var result = MessageBox.Show("Are you sure you want to exit?", "Exit Confirmation", MessageBoxButtons.YesNo);
+            if (result == DialogResult.No)
+            {
+                e.Cancel = true; // Anulează închiderea formularului
+            }
+        }
+
+        private void exitButton_Click(object sender, EventArgs e)
+        {
+            server.DisconnectFromServer();
+            Application.Exit(); // Închide întreaga aplicație
         }
     }
 }
