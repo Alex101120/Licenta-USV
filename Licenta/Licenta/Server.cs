@@ -26,8 +26,9 @@ namespace Licenta
         private Dictionary<string, System.Timers.Timer> userTimers = new Dictionary<string, System.Timers.Timer>();
         private const double timeoutInterval = 300000;
         Dictionary<string, List<string>> sensorData = new Dictionary<string, List<string>>();
-        
+        public string baseLogPath = @"D:\Licenta\Licenta-USV\Licenta\Logs";
         string sensorName;
+        
 
 
 
@@ -36,6 +37,8 @@ namespace Licenta
         public Server()
         {
             AuthFrom authFrom = new AuthFrom();
+            
+
             client = new XmppClient
             {
                 XmppDomain = "localhost", // Domeniul serverului XMPP
@@ -46,7 +49,7 @@ namespace Licenta
                 
                 
         };
-
+            
 
             client.OnMessage += (sender, e) =>
             {
@@ -101,8 +104,8 @@ namespace Licenta
                     ResetUserTimer(destinatar);
                     try
                     {
-                        string baseLogPath = @"D:\Licenta\Licenta-USV\Licenta\Logs";
-                        string receivedLogFilePath = Path.Combine(baseLogPath, $"{destinatar}_LogsMesajePrimite.txt");
+                        
+                    string receivedLogFilePath = Path.Combine(baseLogPath, $"{destinatar}_LogsMesajePrimite.txt");
                         string sentLogFilePath = Path.Combine(baseLogPath, $"{destinatar}_LogsMesajeTrimise.txt");
 
                         // Ensure the directory exists
@@ -150,8 +153,11 @@ namespace Licenta
             };
 
            
-            
+
         }
+
+        
+
         public Dictionary<string, List<string>> GetSenzorData()
         {
             return sensorData;
@@ -223,7 +229,8 @@ namespace Licenta
         {
             try
             {
-                string baseLogPath = @"D:\Licenta\Licenta-USV\Licenta\Logs";
+                
+               
                 string sensorLogFilePath = Path.Combine(baseLogPath, $"{destinatar}_{sensorName}.txt");
 
                 // Asigură existența directorului pentru fișierul senzorului

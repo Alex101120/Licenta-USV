@@ -41,6 +41,7 @@
             this.DataTime = new System.Windows.Forms.Label();
             this.DataAndTIme = new System.Windows.Forms.Timer(this.components);
             this.Time = new System.Windows.Forms.Label();
+            this.SettingsButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // flowLayoutPanel1
@@ -144,11 +145,22 @@
             this.Time.TabIndex = 6;
             this.Time.Text = "Time";
             // 
+            // SettingsButton
+            // 
+            this.SettingsButton.Location = new System.Drawing.Point(807, 111);
+            this.SettingsButton.Name = "SettingsButton";
+            this.SettingsButton.Size = new System.Drawing.Size(91, 93);
+            this.SettingsButton.TabIndex = 8;
+            this.SettingsButton.Text = "Settings";
+            this.SettingsButton.UseVisualStyleBackColor = true;
+            this.SettingsButton.Click += new System.EventHandler(this.SettingsButton_Click);
+            // 
             // DashBoard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(988, 528);
+            this.ClientSize = new System.Drawing.Size(1008, 528);
+            this.Controls.Add(this.SettingsButton);
             this.Controls.Add(this.Time);
             this.Controls.Add(this.DataTime);
             this.Controls.Add(this.label2);
@@ -178,5 +190,6 @@
         private System.Windows.Forms.Label DataTime;
         private System.Windows.Forms.Timer DataAndTIme;
         private System.Windows.Forms.Label Time;
+        private System.Windows.Forms.Button SettingsButton;
     }
 }

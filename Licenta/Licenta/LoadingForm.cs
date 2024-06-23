@@ -11,12 +11,14 @@ namespace Licenta
         Server server = new Server();
         Timer connectTimer;
         Timer statusTimer;
+         
 
         public LoadingForm()
         {
             InitializeComponent();
             InitializeConnectTimer();
             InitializeStatusTimer();
+           
         }
 
         private void InitializeConnectTimer()

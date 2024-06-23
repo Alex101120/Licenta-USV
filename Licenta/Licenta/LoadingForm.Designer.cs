@@ -55,15 +55,15 @@
             this.Connecting.TabIndex = 1;
             this.Connecting.TextChanged += new System.EventHandler(this.Connecting_TextChanged);
             // 
-            // Form1
+            // LoadingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.Connecting);
             this.Controls.Add(this.progressBar1);
-            this.Name = "Form1";
-            this.Text = "Form1";
+            this.Name = "LoadingForm";
+            this.Text = "Loading...";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

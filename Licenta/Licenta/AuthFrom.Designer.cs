@@ -106,7 +106,7 @@
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.textBox1);
             this.Name = "AuthFrom";
-            this.Text = "AuthFrom";
+            this.Text = "Autentificare";
             this.ResumeLayout(false);
             this.PerformLayout();
 

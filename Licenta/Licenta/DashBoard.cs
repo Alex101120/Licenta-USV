@@ -10,6 +10,8 @@ using LiveCharts;
 using LiveCharts.Charts;
 using LiveCharts.Defaults;
 using LiveCharts.WinForms;
+using ClosedXML.Excel;
+using System.IO;
 
 namespace Licenta
 {
@@ -18,6 +20,8 @@ namespace Licenta
         Server server;
         private bool isDraggingChart = false;
         private Point chartStartPoint = Point.Empty;
+        private SettingsForm _settingsForm;
+        string defaultPath = @"D:\Licenta\Licenta-USV\Licenta\Logs";
 
         public DashBoard()
         {
@@ -28,10 +32,13 @@ namespace Licenta
             server.ConnectToServer();
             UpdateDateTime();
             this.FormClosing += new FormClosingEventHandler(Dashboard_FormClosing);
+            _settingsForm = new SettingsForm(this);
+            _settingsForm.PathSchimbat += PathSchimbat;
 
 
 
-            
+
+
             comboBox1.Items.Add("SingleTestView");
             comboBox1.Items.Add("MultiTextView");
             comboBox1.Items.Add("ListView");
@@ -39,7 +46,7 @@ namespace Licenta
             comboBox1.Items.Add("AngularGaugeChart");
 
         }
-
+       
 
         void UpdateUser()
         {
@@ -171,6 +178,10 @@ namespace Licenta
         void UpdateSenzorData()
         {
             Dictionary<string, List<string>> sensorData = server.GetSenzorData();
+            List<User> activeUsers = server.GetActiveUsers();
+
+            // Scriem datele în fișierele Excel și actualizăm combobox-ul
+            WriteDataToExcel(sensorData, defaultPath, activeUsers);
 
             foreach (var sensorName in sensorData.Keys)
             {
@@ -212,15 +223,7 @@ namespace Licenta
             UpdateSenzorData();
         }
 
-        void Refresh()
-        {
-            flowLayoutPanel1.Controls.Clear();
-        }
-
-       
-
-        
-
+      
         private void panel1_Paint_1(object sender, PaintEventArgs e)
         {
 
@@ -381,6 +384,15 @@ namespace Licenta
                     }
                 }
             }
+            else
+            {
+                var result = MessageBox.Show("Selecteaza un tabel ", "Iesire", MessageBoxButtons.OK);
+                if (result == DialogResult.OK)
+                {
+
+                }
+            }
+
         }
 
 
@@ -444,6 +456,14 @@ namespace Licenta
                     }
                 }
             }
+            else
+            {
+                var result = MessageBox.Show("Selecteaza un tabel ", "Iesire", MessageBoxButtons.OK);
+                if (result == DialogResult.OK)
+                {
+
+                }
+            }
         }
 
 
@@ -505,6 +525,14 @@ namespace Licenta
                     currentPanel.Controls.Add(chart);
                 }
             }
+            else
+            {
+                var result = MessageBox.Show("Selecteaza un tabel ", "Iesire", MessageBoxButtons.OK);
+                if (result == DialogResult.OK)
+                {
+
+                }
+            }
         }
 
         private void AngularGaugeChart(string sensorName)
@@ -541,6 +569,14 @@ namespace Licenta
                     }
 
                     currentPanel.Controls.Add(angularGauge);
+                }
+            }
+            else
+            {
+                var result = MessageBox.Show("Selecteaza un tabel ", "Iesire", MessageBoxButtons.OK);
+                if (result == DialogResult.OK)
+                {
+
                 }
             }
         }
@@ -792,6 +828,82 @@ namespace Licenta
         {
             server.DisconnectFromServer();
             Application.Exit(); // Închide întreaga aplicație
+        }
+
+        private void SettingsButton_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            _settingsForm.Show();
+        }
+        
+        private void PathSchimbat(object sender, EventArgs e)
+        {
+            if (_settingsForm.GetBasePathExcel() != null)
+            {
+                defaultPath = _settingsForm.GetBasePathExcel();
+                Debug.WriteLine("AmSchimbatPath");
+            }
+            else
+            {
+                defaultPath = @"D:\Licenta\Licenta-USV\Licenta\Logs";
+            }
+        }
+        public void WriteDataToExcel(Dictionary<string, List<string>> sensorData, string defaultPath, List<User> activeUsers)
+        {
+            // Verificăm dacă folderul defaultPath există, altfel îl creăm
+            if (!Directory.Exists(defaultPath))
+            {
+                Directory.CreateDirectory(defaultPath);
+            }
+
+            // Parcurgem fiecare utilizator activ pentru a crea sau actualiza fișierele Excel
+            foreach (var user in activeUsers)
+            {
+                string userName = user.Username;
+                string fileName = Path.Combine(defaultPath, $"{userName}.xlsx");
+
+                // Verificăm dacă fișierul există deja
+                XLWorkbook workbook;
+                if (File.Exists(fileName))
+                {
+                    workbook = new XLWorkbook(fileName);
+                }
+                else
+                {
+                    workbook = new XLWorkbook();
+                }
+
+                // Verificăm dacă există deja un sheet cu numele "Date senzori"
+                IXLWorksheet worksheet;
+                
+
+                // Adăugăm datele pentru fiecare senzor în sheet-ul corespunzător
+                foreach (var sensor in sensorData)
+                {
+                    // Creăm un sheet pentru fiecare senzor dacă nu există deja
+                    IXLWorksheet sensorWorksheet;
+                    if (workbook.TryGetWorksheet(sensor.Key, out sensorWorksheet))
+                    {
+                        sensorWorksheet.Clear();
+                    }
+                    else
+                    {
+                        sensorWorksheet = workbook.Worksheets.Add(sensor.Key);
+                    }
+
+                    // Adăugăm datele pentru acest senzor
+                    sensorWorksheet.Cell(1, 1).Value = "Date";
+                    int rowIndex = 2;
+                    foreach (var value in sensor.Value)
+                    {
+                        sensorWorksheet.Cell(rowIndex, 1).Value = value;
+                        rowIndex++;
+                    }
+                }
+
+                // Salvăm workbook-ul
+                workbook.SaveAs(fileName);
+            }
         }
     }
 }
