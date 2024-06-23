@@ -1,0 +1,5 @@
+Date: 23.06.2024
+16:09:38: Valoarea pentru SenzoA: 1
+16:09:40: Valoarea pentru SenzoA: 1
+16:09:56: Valoarea pentru SenzoA: 1
+16:10:00: Valoarea pentru SenzoA: 1

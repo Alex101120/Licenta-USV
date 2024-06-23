@@ -1,0 +1,11 @@
+Date: 23.06.2024
+16:10:24: Valoarea pentru SenzoB: 3232
+16:11:37: Valoarea pentru SenzoB: 3232
+16:11:59: Valoarea pentru SenzoB: 3232
+16:12:01: Valoarea pentru SenzoB: 3232
+16:12:02: Valoarea pentru SenzoB: 3232
+16:12:04: Valoarea pentru SenzoB: 3232
+16:12:05: Valoarea pentru SenzoB: 3232
+16:12:07: Valoarea pentru SenzoB: 3232
+16:12:08: Valoarea pentru SenzoB: 3232
+16:12:09: Valoarea pentru SenzoB: 3232

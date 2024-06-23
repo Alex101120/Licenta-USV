@@ -41,7 +41,10 @@
             this.DataTime = new System.Windows.Forms.Label();
             this.DataAndTIme = new System.Windows.Forms.Timer(this.components);
             this.Time = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.OpenExcel = new System.Windows.Forms.Button();
             this.SettingsButton = new System.Windows.Forms.Button();
+            this.DeschideExcelLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // flowLayoutPanel1
@@ -56,7 +59,7 @@
             // Adauga
             // 
             this.Adauga.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Adauga.Location = new System.Drawing.Point(844, 483);
+            this.Adauga.Location = new System.Drawing.Point(864, 483);
             this.Adauga.Name = "Adauga";
             this.Adauga.Size = new System.Drawing.Size(112, 33);
             this.Adauga.TabIndex = 0;
@@ -86,7 +89,7 @@
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Location = new System.Drawing.Point(813, 456);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(163, 21);
+            this.comboBox1.Size = new System.Drawing.Size(183, 21);
             this.comboBox1.TabIndex = 2;
             this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
@@ -95,7 +98,7 @@
             this.comboBox2.FormattingEnabled = true;
             this.comboBox2.Location = new System.Drawing.Point(813, 409);
             this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(163, 21);
+            this.comboBox2.Size = new System.Drawing.Size(183, 21);
             this.comboBox2.TabIndex = 0;
             this.comboBox2.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged);
             // 
@@ -145,21 +148,54 @@
             this.Time.TabIndex = 6;
             this.Time.Text = "Time";
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(941, 302);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(63, 24);
+            this.label3.TabIndex = 9;
+            this.label3.Text = "Setari";
+            // 
+            // OpenExcel
+            // 
+            this.OpenExcel.BackgroundImage = global::Licenta.Properties.Resources.download__2_;
+            this.OpenExcel.Location = new System.Drawing.Point(834, 329);
+            this.OpenExcel.Name = "OpenExcel";
+            this.OpenExcel.Size = new System.Drawing.Size(52, 50);
+            this.OpenExcel.TabIndex = 10;
+            this.OpenExcel.UseVisualStyleBackColor = true;
+            this.OpenExcel.Click += new System.EventHandler(this.OpenExcel_Click);
+            // 
             // SettingsButton
             // 
-            this.SettingsButton.Location = new System.Drawing.Point(807, 111);
+            this.SettingsButton.BackgroundImage = global::Licenta.Properties.Resources.download__1___4_;
+            this.SettingsButton.Location = new System.Drawing.Point(945, 329);
             this.SettingsButton.Name = "SettingsButton";
-            this.SettingsButton.Size = new System.Drawing.Size(91, 93);
+            this.SettingsButton.Size = new System.Drawing.Size(51, 50);
             this.SettingsButton.TabIndex = 8;
-            this.SettingsButton.Text = "Settings";
             this.SettingsButton.UseVisualStyleBackColor = true;
             this.SettingsButton.Click += new System.EventHandler(this.SettingsButton_Click);
+            // 
+            // DeschideExcelLabel
+            // 
+            this.DeschideExcelLabel.AutoSize = true;
+            this.DeschideExcelLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DeschideExcelLabel.Location = new System.Drawing.Point(809, 302);
+            this.DeschideExcelLabel.Name = "DeschideExcelLabel";
+            this.DeschideExcelLabel.Size = new System.Drawing.Size(98, 24);
+            this.DeschideExcelLabel.TabIndex = 11;
+            this.DeschideExcelLabel.Text = "Deschide";
             // 
             // DashBoard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1008, 528);
+            this.Controls.Add(this.DeschideExcelLabel);
+            this.Controls.Add(this.OpenExcel);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.SettingsButton);
             this.Controls.Add(this.Time);
             this.Controls.Add(this.DataTime);
@@ -191,5 +227,8 @@
         private System.Windows.Forms.Timer DataAndTIme;
         private System.Windows.Forms.Label Time;
         private System.Windows.Forms.Button SettingsButton;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button OpenExcel;
+        private System.Windows.Forms.Label DeschideExcelLabel;
     }
 }

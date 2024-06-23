@@ -186,3 +186,10 @@ Date: 23.06.2024
 15:08:26: Valoarea pentru SenzorA: 55
 15:08:30: Valoarea pentru SenzorA: 44
 15:08:41: Valoarea pentru SenzorA: 100
+15:53:39: Valoarea pentru SenzorA: 1
+15:53:47: Valoarea pentru SenzorA: 1
+15:54:31: Valoarea pentru SenzorA: 1
+16:01:29: Valoarea pentru SenzorA: 1
+16:01:50: Valoarea pentru SenzorA: 4
+16:01:54: Valoarea pentru SenzorA: 5
+16:01:56: Valoarea pentru SenzorA: 6

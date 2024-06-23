@@ -28,23 +28,23 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.Path = new System.Windows.Forms.Label();
+            this.PathLabel = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.ChangePath = new System.Windows.Forms.Button();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.BackButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // Path
+            // PathLabel
             // 
-            this.Path.AutoSize = true;
-            this.Path.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Path.Location = new System.Drawing.Point(13, 124);
-            this.Path.Name = "Path";
-            this.Path.Size = new System.Drawing.Size(399, 25);
-            this.Path.TabIndex = 0;
-            this.Path.Text = "D:\\Licenta\\Licenta-USV\\Licenta\\Logs";
-            this.Path.Click += new System.EventHandler(this.Path_Click);
+            this.PathLabel.AutoSize = true;
+            this.PathLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.PathLabel.Location = new System.Drawing.Point(13, 124);
+            this.PathLabel.Name = "PathLabel";
+            this.PathLabel.Size = new System.Drawing.Size(399, 25);
+            this.PathLabel.TabIndex = 0;
+            this.PathLabel.Text = "D:\\Licenta\\Licenta-USV\\Licenta\\Logs";
+            this.PathLabel.Click += new System.EventHandler(this.Path_Click);
             // 
             // label2
             // 
@@ -82,11 +82,11 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(722, 431);
+            this.ClientSize = new System.Drawing.Size(573, 241);
             this.Controls.Add(this.BackButton);
             this.Controls.Add(this.ChangePath);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.Path);
+            this.Controls.Add(this.PathLabel);
             this.Name = "SettingsForm";
             this.Text = "Settings";
             this.ResumeLayout(false);
@@ -96,7 +96,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Label Path;
+        private System.Windows.Forms.Label PathLabel;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button ChangePath;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;

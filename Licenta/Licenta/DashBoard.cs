@@ -13,6 +13,7 @@ using LiveCharts.WinForms;
 using ClosedXML.Excel;
 using System.IO;
 
+
 namespace Licenta
 {
     public partial class DashBoard : Form
@@ -34,6 +35,7 @@ namespace Licenta
             this.FormClosing += new FormClosingEventHandler(Dashboard_FormClosing);
             _settingsForm = new SettingsForm(this);
             _settingsForm.PathSchimbat += PathSchimbat;
+            LoadDefaultPath();
 
 
 
@@ -835,75 +837,183 @@ namespace Licenta
             this.Hide();
             _settingsForm.Show();
         }
-        
+        private void LoadDefaultPath()
+        {
+            string projectDirectory = Directory.GetParent(Environment.CurrentDirectory).Parent.FullName;
+            string configFilePath = Path.Combine(projectDirectory, "Conf.txt");
+
+            // Verificăm dacă fișierul de configurare există
+            if (File.Exists(configFilePath))
+            {
+                // Citim path-ul din fișierul de configurare
+                defaultPath = File.ReadAllText(configFilePath);
+            }
+            else
+            {
+                // Dacă fișierul de configurare nu există, setăm un path implicit
+                defaultPath = @"D:\Licenta\Licenta-USV\Licenta\Logs";
+            }
+        }
+
         private void PathSchimbat(object sender, EventArgs e)
         {
             if (_settingsForm.GetBasePathExcel() != null)
             {
                 defaultPath = _settingsForm.GetBasePathExcel();
                 Debug.WriteLine("AmSchimbatPath");
+
+                // Actualizăm fișierul de configurare
+                SalvarePathConfig(defaultPath);
+            }
+        }
+
+
+       public void WriteDataToExcel(Dictionary<string, List<string>> sensorData, string defaultPath, List<User> activeUsers)
+{
+    // Verificăm dacă folderul defaultPath există, altfel îl creăm
+    if (!Directory.Exists(defaultPath))
+    {
+        Directory.CreateDirectory(defaultPath);
+    }
+
+    // Parcurgem fiecare utilizator activ pentru a crea sau actualiza fișierele Excel
+    foreach (var user in activeUsers)
+    {
+        string userName = user.Username;
+        string fileName = Path.Combine(defaultPath, $"{userName}.xlsx");
+
+        // Inițializăm workbook cu o valoare implicită pentru a evita eroarea CS0165
+        XLWorkbook workbook = null;
+
+        try
+        {
+            if (File.Exists(fileName))
+            {
+                // Dacă fișierul există, îl încărcăm pentru a adăuga date noi la sfârșitul sheet-ului existent
+                workbook = new XLWorkbook(fileName);
             }
             else
             {
-                defaultPath = @"D:\Licenta\Licenta-USV\Licenta\Logs";
-            }
-        }
-        public void WriteDataToExcel(Dictionary<string, List<string>> sensorData, string defaultPath, List<User> activeUsers)
-        {
-            // Verificăm dacă folderul defaultPath există, altfel îl creăm
-            if (!Directory.Exists(defaultPath))
-            {
-                Directory.CreateDirectory(defaultPath);
+                // Dacă fișierul nu există, creăm un workbook nou
+                workbook = new XLWorkbook();
             }
 
-            // Parcurgem fiecare utilizator activ pentru a crea sau actualiza fișierele Excel
-            foreach (var user in activeUsers)
+            // Iterăm prin fiecare sensor și adăugăm datele în sheet-ul corespunzător
+            foreach (var sensor in sensorData)
             {
-                string userName = user.Username;
-                string fileName = Path.Combine(defaultPath, $"{userName}.xlsx");
-
-                // Verificăm dacă fișierul există deja
-                XLWorkbook workbook;
-                if (File.Exists(fileName))
+                // Verificăm dacă există deja un sheet cu numele senzorului
+                IXLWorksheet sensorWorksheet;
+                if (workbook.TryGetWorksheet(sensor.Key, out sensorWorksheet))
                 {
-                    workbook = new XLWorkbook(fileName);
+                    // Dacă sheet-ul există, adăugăm datele la sfârșitul acestuia
+                    int lastRow = sensorWorksheet.LastRowUsed().RowNumber();
+                    int rowIndex = lastRow + 1;
+
+                    foreach (var value in sensor.Value)
+                    {
+                        sensorWorksheet.Cell(rowIndex, 1).Value = value;
+                        sensorWorksheet.Cell(rowIndex, 2).Value = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                        rowIndex++;
+                    }
                 }
                 else
                 {
-                    workbook = new XLWorkbook();
-                }
+                    // Dacă sheet-ul nu există, îl creăm și adăugăm datele
+                    sensorWorksheet = workbook.Worksheets.Add(sensor.Key);
 
-                // Verificăm dacă există deja un sheet cu numele "Date senzori"
-                IXLWorksheet worksheet;
-                
+                    sensorWorksheet.Cell(1, 1).Value = "Date Senzor";
+                    sensorWorksheet.Cell(1, 2).Value = "Data de Transmitere";
 
-                // Adăugăm datele pentru fiecare senzor în sheet-ul corespunzător
-                foreach (var sensor in sensorData)
-                {
-                    // Creăm un sheet pentru fiecare senzor dacă nu există deja
-                    IXLWorksheet sensorWorksheet;
-                    if (workbook.TryGetWorksheet(sensor.Key, out sensorWorksheet))
-                    {
-                        sensorWorksheet.Clear();
-                    }
-                    else
-                    {
-                        sensorWorksheet = workbook.Worksheets.Add(sensor.Key);
-                    }
-
-                    // Adăugăm datele pentru acest senzor
-                    sensorWorksheet.Cell(1, 1).Value = "Date";
                     int rowIndex = 2;
                     foreach (var value in sensor.Value)
                     {
                         sensorWorksheet.Cell(rowIndex, 1).Value = value;
+                        sensorWorksheet.Cell(rowIndex, 2).Value = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
                         rowIndex++;
                     }
                 }
+            }
 
-                // Salvăm workbook-ul
-                workbook.SaveAs(fileName);
+            // Salvăm workbook-ul
+            workbook.SaveAs(fileName);
+        }
+        catch (IOException ex)
+        {
+            // Aici gestionăm cazul în care fișierul Excel este deja deschis
+            MessageBox.Show($"Fișierul Excel '{Path.GetFileName(fileName)}' este deja deschis. Vă rugăm să-l închideți și apoi să încercați din nou.", "Fișier deschis", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            // În acest punct, poți decide să iei alte acțiuni, cum ar fi să întrerupi procesul sau să returnezi o valoare specială
+        }
+        catch (Exception ex)
+        {
+            // Aici gestionăm alte tipuri de excepții dacă este cazul
+            MessageBox.Show($"Eroare la deschiderea sau salvarea fișierului Excel: {ex.Message}", "Eroare", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            // În acest punct, poți decide să iei alte acțiuni, cum ar fi să întrerupi procesul sau să returnezi o valoare specială
+        }
+    }
+}
+
+
+        private void SalvarePathConfig(string path)
+        {
+            try
+            {
+                string projectDirectory = Directory.GetParent(Environment.CurrentDirectory).Parent.FullName;
+                string configFilePath = Path.Combine(projectDirectory, "Conf.txt");
+
+                // Salvăm path-ul în fișierul de configurare
+                File.WriteAllText(configFilePath, path);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Eroare la salvarea fișierului de configurare: " + ex.Message);
+                // Poți adăuga aici gestionarea erorilor cum consideri necesar
             }
         }
+
+        private void OpenExcel_Click(object sender, EventArgs e)
+        {
+            // Inițializăm dialogul de deschidere a fișierului
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+
+            // Setăm filtrul pentru tipurile de fișiere acceptate (doar fișiere Excel)
+            openFileDialog.Filter = "Excel Files|*.xls;*.xlsx;*.xlsm";
+            openFileDialog.InitialDirectory = defaultPath;
+
+            // Afisăm dialogul și verificăm dacă utilizatorul a selectat un fișier
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string filePath = openFileDialog.FileName;
+
+                // Verificăm dacă fișierul există
+                if (File.Exists(filePath))
+                {
+                    try
+                    {
+                        // Deschidem fișierul Excel folosind ClosedXML
+                        XLWorkbook workbook = new XLWorkbook(filePath);
+
+                        // Poți face diverse operații cu workbook-ul aici
+
+                        // Salvăm workbook-ul (dacă dorești să faci modificări)
+                        workbook.Save();
+
+                        // Eliberăm resursele
+                        workbook.Dispose();
+                        Process.Start(filePath);
+
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Eroare la deschiderea fișierului Excel: {ex.Message}", "Eroare", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show($"Fișierul '{filePath}' nu există.", "Eroare", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+        
+       
     }
 }

@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,7 +25,8 @@ namespace Licenta
         public SettingsForm()
         {
             InitializeComponent();
-            Path.Text = @"D:\Licenta\Licenta-USV\Licenta\Logs";
+          
+           
         }
 
         private void Path_Click(object sender, EventArgs e)
@@ -34,6 +36,7 @@ namespace Licenta
         public SettingsForm(DashBoard dashBoard)
         {
             InitializeComponent();
+            LoadDefaultPath();
             _dashBoard = dashBoard;
         }
 
@@ -50,15 +53,34 @@ namespace Licenta
                 {
                     string folderPath = folderBrowserDialog1.SelectedPath;
                     BasePathExcel = folderPath;
-                    Path.Text = folderPath;
+                    PathLabel.Text = folderPath;
                     PathSchimbat?.Invoke(this, EventArgs.Empty);
                 }
             }
         }
 
-       
 
-       
+        private void LoadDefaultPath()
+        {
+            string projectDirectory = Directory.GetParent(Environment.CurrentDirectory).Parent.FullName;
+            string configFilePath = Path.Combine(projectDirectory, "Conf.txt");
+
+            // Verificăm dacă fișierul de configurare există
+            if (File.Exists(configFilePath))
+            {
+                // Citim path-ul din fișierul de configurare
+                Debug.WriteLine("Este");
+                BasePathExcel = File.ReadAllText(configFilePath);
+                PathLabel.Text = BasePathExcel;
+            }
+            else
+            {
+                // Dacă fișierul de configurare nu există, setăm un path implicit
+                Debug.WriteLine("Nu este");
+                BasePathExcel = @"D:\Licenta\Licenta-USV\Licenta\Logs";
+            }
+        }
+
         public string GetBasePathExcel()
         {
             return BasePathExcel;
@@ -68,7 +90,7 @@ namespace Licenta
         {
             this.Hide();
             _dashBoard.Show();
-            PathSchimbat?.Invoke(this, EventArgs.Empty);
+           
         }
     }
 }
