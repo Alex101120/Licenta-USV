@@ -1,0 +1,4 @@
+Date: 23.06.2024
+19:29:01: Valoarea pentru SenzorB: 1
+19:29:44: Valoarea pentru SenzorB: 4
+19:29:59: Valoarea pentru SenzorB: 100

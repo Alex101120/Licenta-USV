@@ -487,7 +487,7 @@ namespace Licenta
                     {
                         Size = new Size(200, 200),
                         Name = $"{sensorName}_Chart",
-                        Location = new Point(333, 393),
+                        Location = new Point(353, 333),
                        
                         
                         
