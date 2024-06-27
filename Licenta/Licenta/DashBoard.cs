@@ -14,6 +14,8 @@ using ClosedXML.Excel;
 using System.IO;
 
 
+
+
 namespace Licenta
 {
     public partial class DashBoard : Form
@@ -85,7 +87,7 @@ namespace Licenta
                     {
                         Name = user.Username,
                         Text = user.Username,
-                        BackColor = Color.Transparent,
+                        BackColor = Color.White,
                         Size = new Size(100, 40),
                         AutoCheck = true,
                         AutoSize = false
@@ -97,7 +99,7 @@ namespace Licenta
                     {
                         Name = $"{user.Username}_Panel",
                         Size = MainDashboard.Size,
-                        BackColor = Color.White,
+                        BackColor = Color.DarkGray,
                         BorderStyle = BorderStyle.FixedSingle,
                         Visible = false
                     };
@@ -487,7 +489,8 @@ namespace Licenta
                     {
                         Size = new Size(200, 200),
                         Name = $"{sensorName}_Chart",
-                        Location = new Point(353, 333),
+                        Location = new Point(380, 270),
+                        BackColor = Color.Black
                        
                         
                         
@@ -552,12 +555,14 @@ namespace Licenta
                         Name = $"{sensorName}_AngularGauge",
                         Value = double.Parse(sensorData[sensorName].Last()),
                         FromValue = 0, // Set the starting value of the gauge
-                        ToValue = 100, // Set the maximum value of the gauge
-                        TicksForeground = System.Windows.Media.Brushes.Gray,
-                        Location = new Point(0, 333),
-                        BackColor = Color.White,
+                        ToValue = 1000, // Set the maximum value of the gauge
+                        TicksForeground = System.Windows.Media.Brushes.White,                                             
+                        Location = new Point(0, 270),
+                        NeedleFill = System.Windows.Media.Brushes.White,
+                        BackColor = Color.Black,
                        
                     };
+                    angularGauge.Base.Foreground = System.Windows.Media.Brushes.White;
 
                     angularGauge.MouseDown += Chart_MouseDown;
                     angularGauge.MouseMove += Chart_MouseMove;
@@ -677,9 +682,39 @@ namespace Licenta
                 {
                     string sensorName = angularGauge.Name.Replace("_AngularGauge", "");
                     Dictionary<string, List<string>> sensorData = server.GetSenzorData();
+
+                    // Găsește valoarea maximă din dicționar
+                    double maxValue = sensorData
+                        .SelectMany(kv => kv.Value)
+                        .Select(valueStr => double.Parse(valueStr))
+                        .Max();
+
+                    // Setează proprietatea ToValue la valoarea maximă găsită
+                    angularGauge.ToValue = maxValue;
+                    if (maxValue <= 100)
+                    {
+                        angularGauge.LabelsStep = 5;
+                    }
+                    else if (maxValue <= 1000)
+                    {
+                        angularGauge.LabelsStep = 10;
+                    }
+                    else if (maxValue <= 10000)
+                    {
+                        angularGauge.LabelsStep = 100;
+                    }
+                    else if (maxValue <= 100000)
+                    {
+                        angularGauge.LabelsStep = 1000;
+                    }
+                    else
+                    {
+                        angularGauge.LabelsStep = 10000;
+                    }
                     if (sensorData.ContainsKey(sensorName))
                     {
                         angularGauge.Value = double.Parse(sensorData[sensorName].Last());
+                       
                     }
                 }
             }
@@ -1013,7 +1048,15 @@ namespace Licenta
                 }
             }
         }
-        
-       
+
+        private void DeschideExcelLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

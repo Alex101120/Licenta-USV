@@ -228,5 +228,23 @@
   <ItemGroup>
     <None Include="Resources\download %282%29.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\LogoCheie.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\LogoUser.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\UserIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\UserIcon1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SetariLogo-removebg-preview.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

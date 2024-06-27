@@ -15,9 +15,11 @@ namespace Licenta
     {
         public string username ="admin";
         public string password ="admin";
+        
         public AuthFrom()
         {
             InitializeComponent();
+            
             textBox1.Text = username;
             textBox2.Text = password;
 
@@ -36,9 +38,10 @@ namespace Licenta
 
         private void LoginButton_Click(object sender, EventArgs e)
         {
-
+            
             username = textBox1.Text;
             password = textBox2.Text;
+            
 
 
 

@@ -86,14 +86,14 @@ namespace Licenta
             if (status)
             {
                 progressBar1.Value = 100;
-                Connecting.Text = "Conectat";
+                ConectareLabel.Text = "Conectare reusita";
                 LoadForm();
                
             }
             else
             {
                 progressBar1.Value = 10;
-                Connecting.Text = "Conectare..";
+                ConectareLabel.Text = "Conectare..";
             }
         }
 
@@ -107,6 +107,11 @@ namespace Licenta
         private void Connecting_TextChanged(object sender, EventArgs e)
         {
            
+        }
+
+        private void ConectareLabel_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
