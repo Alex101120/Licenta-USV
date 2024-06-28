@@ -69,7 +69,7 @@
             // 
             // Adauga
             // 
-            this.Adauga.BackColor = System.Drawing.SystemColors.HotTrack;
+            this.Adauga.BackColor = System.Drawing.Color.SlateGray;
             this.Adauga.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Adauga.ForeColor = System.Drawing.Color.White;
             this.Adauga.Location = new System.Drawing.Point(836, 473);
@@ -91,7 +91,7 @@
             // 
             // MainDashboard
             // 
-            this.MainDashboard.BackColor = System.Drawing.Color.DeepSkyBlue;
+            this.MainDashboard.BackColor = System.Drawing.SystemColors.ScrollBar;
             this.MainDashboard.Location = new System.Drawing.Point(223, 52);
             this.MainDashboard.Name = "MainDashboard";
             this.MainDashboard.Size = new System.Drawing.Size(579, 468);
@@ -140,10 +140,10 @@
             // DataTime
             // 
             this.DataTime.AutoSize = true;
-            this.DataTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DataTime.Location = new System.Drawing.Point(802, 78);
+            this.DataTime.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DataTime.Location = new System.Drawing.Point(808, 58);
             this.DataTime.Name = "DataTime";
-            this.DataTime.Size = new System.Drawing.Size(48, 20);
+            this.DataTime.Size = new System.Drawing.Size(50, 22);
             this.DataTime.TabIndex = 5;
             this.DataTime.Text = "Data";
             this.DataTime.Click += new System.EventHandler(this.label3_Click);
@@ -156,17 +156,17 @@
             // Time
             // 
             this.Time.AutoSize = true;
-            this.Time.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Time.Location = new System.Drawing.Point(803, 58);
+            this.Time.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Time.Location = new System.Drawing.Point(808, 92);
             this.Time.Name = "Time";
-            this.Time.Size = new System.Drawing.Size(47, 20);
+            this.Time.Size = new System.Drawing.Size(52, 22);
             this.Time.TabIndex = 6;
             this.Time.Text = "Time";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.BackColor = System.Drawing.SystemColors.HotTrack;
+            this.label3.BackColor = System.Drawing.Color.MidnightBlue;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.White;
             this.label3.Location = new System.Drawing.Point(895, 535);
@@ -180,7 +180,7 @@
             this.DeschideExcelLabel.AutoSize = true;
             this.DeschideExcelLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DeschideExcelLabel.ForeColor = System.Drawing.Color.Black;
-            this.DeschideExcelLabel.Location = new System.Drawing.Point(807, 296);
+            this.DeschideExcelLabel.Location = new System.Drawing.Point(871, 272);
             this.DeschideExcelLabel.Name = "DeschideExcelLabel";
             this.DeschideExcelLabel.Size = new System.Drawing.Size(98, 24);
             this.DeschideExcelLabel.TabIndex = 11;
@@ -190,30 +190,30 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.BackColor = System.Drawing.SystemColors.HotTrack;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.BackColor = System.Drawing.Color.MidnightBlue;
+            this.label4.Font = new System.Drawing.Font("Times New Roman", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.Color.White;
             this.label4.Location = new System.Drawing.Point(229, 9);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(128, 25);
+            this.label4.Size = new System.Drawing.Size(246, 32);
             this.label4.TabIndex = 13;
-            this.label4.Text = "DashBoard";
+            this.label4.Text = "Panou de comandă";
             // 
             // UserNameLabel
             // 
             this.UserNameLabel.AutoSize = true;
-            this.UserNameLabel.BackColor = System.Drawing.SystemColors.HotTrack;
-            this.UserNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.UserNameLabel.BackColor = System.Drawing.Color.MidnightBlue;
+            this.UserNameLabel.Font = new System.Drawing.Font("Times New Roman", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.UserNameLabel.ForeColor = System.Drawing.Color.White;
             this.UserNameLabel.Location = new System.Drawing.Point(65, 92);
             this.UserNameLabel.Name = "UserNameLabel";
-            this.UserNameLabel.Size = new System.Drawing.Size(103, 33);
+            this.UserNameLabel.Size = new System.Drawing.Size(98, 32);
             this.UserNameLabel.TabIndex = 17;
             this.UserNameLabel.Text = "Admin";
             // 
             // pictureBox4
             // 
-            this.pictureBox4.BackColor = System.Drawing.SystemColors.HotTrack;
+            this.pictureBox4.BackColor = System.Drawing.Color.MidnightBlue;
             this.pictureBox4.Image = global::Licenta.Properties.Resources.UserIcon1;
             this.pictureBox4.Location = new System.Drawing.Point(71, 9);
             this.pictureBox4.Name = "pictureBox4";
@@ -223,7 +223,7 @@
             // 
             // SettingsButton
             // 
-            this.SettingsButton.BackColor = System.Drawing.SystemColors.HotTrack;
+            this.SettingsButton.BackColor = System.Drawing.Color.MidnightBlue;
             this.SettingsButton.BackgroundImage = global::Licenta.Properties.Resources.SetariLogo_removebg_preview;
             this.SettingsButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.SettingsButton.Location = new System.Drawing.Point(836, 530);
@@ -236,7 +236,7 @@
             // 
             // pictureBox3
             // 
-            this.pictureBox3.BackColor = System.Drawing.SystemColors.HotTrack;
+            this.pictureBox3.BackColor = System.Drawing.Color.MidnightBlue;
             this.pictureBox3.Location = new System.Drawing.Point(0, 520);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(1020, 61);
@@ -245,7 +245,7 @@
             // 
             // pictureBox2
             // 
-            this.pictureBox2.BackColor = System.Drawing.SystemColors.HotTrack;
+            this.pictureBox2.BackColor = System.Drawing.Color.MidnightBlue;
             this.pictureBox2.Location = new System.Drawing.Point(0, -5);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(223, 137);
@@ -254,17 +254,17 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.BackColor = System.Drawing.SystemColors.HotTrack;
-            this.pictureBox1.Location = new System.Drawing.Point(223, -5);
+            this.pictureBox1.BackColor = System.Drawing.Color.MidnightBlue;
+            this.pictureBox1.Location = new System.Drawing.Point(216, -5);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(797, 60);
+            this.pictureBox1.Size = new System.Drawing.Size(804, 60);
             this.pictureBox1.TabIndex = 12;
             this.pictureBox1.TabStop = false;
             // 
             // OpenExcel
             // 
             this.OpenExcel.BackgroundImage = global::Licenta.Properties.Resources.download__2_;
-            this.OpenExcel.Location = new System.Drawing.Point(823, 323);
+            this.OpenExcel.Location = new System.Drawing.Point(890, 299);
             this.OpenExcel.Name = "OpenExcel";
             this.OpenExcel.Size = new System.Drawing.Size(52, 50);
             this.OpenExcel.TabIndex = 10;
@@ -275,7 +275,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.Control;
+            this.BackColor = System.Drawing.SystemColors.ControlLight;
             this.ClientSize = new System.Drawing.Size(1018, 581);
             this.Controls.Add(this.UserNameLabel);
             this.Controls.Add(this.pictureBox4);

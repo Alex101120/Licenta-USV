@@ -23,6 +23,11 @@ namespace Licenta
             textBox1.Text = username;
             textBox2.Text = password;
 
+            LoginButton.TabStop = false;
+            LoginButton.FlatStyle = FlatStyle.Flat;
+            LoginButton.FlatAppearance.BorderSize = 0;
+            LoginButton.FlatAppearance.BorderColor = Color.FromArgb(0, 255, 255, 255);
+
 
         }
 

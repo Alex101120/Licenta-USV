@@ -86,7 +86,7 @@ namespace Licenta
             if (status)
             {
                 progressBar1.Value = 100;
-                ConectareLabel.Text = "Conectare reusita";
+                ConectareLabel.Text = "Conectare a reusit";
                 LoadForm();
                
             }

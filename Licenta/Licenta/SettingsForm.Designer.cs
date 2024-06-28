@@ -38,10 +38,11 @@
             // PathLabel
             // 
             this.PathLabel.AutoSize = true;
-            this.PathLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.PathLabel.Location = new System.Drawing.Point(13, 124);
+            this.PathLabel.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.PathLabel.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.PathLabel.Location = new System.Drawing.Point(29, 108);
             this.PathLabel.Name = "PathLabel";
-            this.PathLabel.Size = new System.Drawing.Size(399, 25);
+            this.PathLabel.Size = new System.Drawing.Size(261, 19);
             this.PathLabel.TabIndex = 0;
             this.PathLabel.Text = "D:\\Licenta\\Licenta-USV\\Licenta\\Logs";
             this.PathLabel.Click += new System.EventHandler(this.Path_Click);
@@ -49,44 +50,48 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(11, 78);
+            this.label2.Font = new System.Drawing.Font("Times New Roman", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label2.Location = new System.Drawing.Point(12, 82);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(346, 31);
+            this.label2.Size = new System.Drawing.Size(416, 26);
             this.label2.TabIndex = 1;
-            this.label2.Text = "Save Directory Path Logs";
+            this.label2.Text = "Calea de salvare a documentelor Excel:";
             // 
             // ChangePath
             // 
+            this.ChangePath.BackColor = System.Drawing.Color.LightGray;
             this.ChangePath.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ChangePath.Location = new System.Drawing.Point(13, 165);
+            this.ChangePath.Location = new System.Drawing.Point(12, 130);
             this.ChangePath.Name = "ChangePath";
-            this.ChangePath.Size = new System.Drawing.Size(75, 53);
+            this.ChangePath.Size = new System.Drawing.Size(74, 43);
             this.ChangePath.TabIndex = 2;
-            this.ChangePath.Text = "Change Path";
-            this.ChangePath.UseVisualStyleBackColor = true;
+            this.ChangePath.Text = "Schimba Calea";
+            this.ChangePath.UseVisualStyleBackColor = false;
             this.ChangePath.Click += new System.EventHandler(this.button1_Click);
             // 
             // BackButton
             // 
+            this.BackButton.BackColor = System.Drawing.Color.Gainsboro;
             this.BackButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BackButton.Location = new System.Drawing.Point(13, 12);
+            this.BackButton.Location = new System.Drawing.Point(3, 3);
             this.BackButton.Name = "BackButton";
-            this.BackButton.Size = new System.Drawing.Size(61, 53);
+            this.BackButton.Size = new System.Drawing.Size(73, 52);
             this.BackButton.TabIndex = 3;
-            this.BackButton.Text = "Back";
-            this.BackButton.UseVisualStyleBackColor = true;
+            this.BackButton.Text = "Inapoi";
+            this.BackButton.UseVisualStyleBackColor = false;
             this.BackButton.Click += new System.EventHandler(this.BackButton_Click);
             // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(573, 241);
+            this.BackColor = System.Drawing.Color.Gray;
+            this.ClientSize = new System.Drawing.Size(434, 184);
+            this.Controls.Add(this.PathLabel);
             this.Controls.Add(this.BackButton);
             this.Controls.Add(this.ChangePath);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.PathLabel);
             this.Name = "SettingsForm";
             this.Text = "Settings";
             this.ResumeLayout(false);

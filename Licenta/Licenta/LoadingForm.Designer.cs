@@ -31,13 +31,11 @@
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.presenceManager1 = new Matrix.Xmpp.Client.PresenceManager();
             this.ConectareLabel = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // progressBar1
             // 
-            this.progressBar1.Location = new System.Drawing.Point(80, 311);
+            this.progressBar1.Location = new System.Drawing.Point(79, 45);
             this.progressBar1.Name = "progressBar1";
             this.progressBar1.Size = new System.Drawing.Size(543, 39);
             this.progressBar1.TabIndex = 0;
@@ -50,33 +48,23 @@
             // 
             this.ConectareLabel.AutoSize = true;
             this.ConectareLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ConectareLabel.Location = new System.Drawing.Point(250, 275);
+            this.ConectareLabel.Location = new System.Drawing.Point(251, 9);
             this.ConectareLabel.Name = "ConectareLabel";
             this.ConectareLabel.Size = new System.Drawing.Size(176, 33);
             this.ConectareLabel.TabIndex = 1;
             this.ConectareLabel.Text = "Conectare..";
             this.ConectareLabel.Click += new System.EventHandler(this.ConectareLabel_Click);
             // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Location = new System.Drawing.Point(13, 3);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(154, 114);
-            this.pictureBox1.TabIndex = 2;
-            this.pictureBox1.TabStop = false;
-            // 
             // LoadingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(708, 415);
-            this.Controls.Add(this.pictureBox1);
+            this.ClientSize = new System.Drawing.Size(708, 105);
             this.Controls.Add(this.ConectareLabel);
             this.Controls.Add(this.progressBar1);
             this.Name = "LoadingForm";
             this.Text = "Conectare..";
             this.Load += new System.EventHandler(this.Form1_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -87,7 +75,6 @@
         private System.Windows.Forms.ProgressBar progressBar1;
         private Matrix.Xmpp.Client.PresenceManager presenceManager1;
         private System.Windows.Forms.Label ConectareLabel;
-        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }
 

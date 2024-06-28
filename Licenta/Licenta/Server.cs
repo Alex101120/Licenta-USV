@@ -42,13 +42,10 @@ namespace Licenta
             client = new XmppClient
             {
                 XmppDomain = "localhost", // Domeniul serverului XMPP
-                Username = authFrom.GetUsername(), // Numele de utilizator pentru aplicația ta
+                Username = authFrom.GetUsername(), // Numele de utilizator
                 Password = authFrom.GetPassword(), // Parola utilizatorului
                 Resource = "CSharpApp" // O resursă opțională pentru identificarea sesiunii
-                
-                
-                
-        };
+            };
             
 
             client.OnMessage += (sender, e) =>
@@ -58,6 +55,7 @@ namespace Licenta
                 string mesaj = e.Message.Body;
                 string raspunsping = "Mesaj Primit";
 
+                //Sistem de prezenţă
                 if (mesaj == "Online")
                 {
                     var user = activeUsers.FirstOrDefault(u => u.Username == destinatar);
@@ -69,12 +67,13 @@ namespace Licenta
                         UsersUpdated?.Invoke(this, EventArgs.Empty);
                     }
                     user.IsActive = true;
+                    
                 }
 
 
                 else
                 {
-                    Debug.WriteLine("Am intrat in else");
+                    
                     string[] parts = mesaj.Split('/');
                     if (parts.Length == 2)
                     {
@@ -106,7 +105,7 @@ namespace Licenta
                     {
                         
                     string receivedLogFilePath = Path.Combine(baseLogPath, $"{destinatar}_LogsMesajePrimite.txt");
-                        string sentLogFilePath = Path.Combine(baseLogPath, $"{destinatar}_LogsMesajeTrimise.txt");
+                    string sentLogFilePath = Path.Combine(baseLogPath, $"{destinatar}_LogsMesajeTrimise.txt");
 
                         // Ensure the directory exists
                         string directoryPath = Path.GetDirectoryName(receivedLogFilePath);
@@ -128,24 +127,24 @@ namespace Licenta
                 
             };
 
-            // Abonează-te la evenimentul OnError pentru a gestiona erorile
+            // Evenimentul OnError pentru a gestiona erorile
             client.OnError += (sender, e) =>
             {
                 Debug.WriteLine($"Error: {e.Exception}");
-                var result = MessageBox.Show("Eroare  " + e.Exception, "Exit Confirmation", MessageBoxButtons.OK);
+                var result = MessageBox.Show("Eroare la conectarea serverului " + e.Exception, "Ieşire", MessageBoxButtons.OK);
                 if (result == DialogResult.OK)
                 {
                     Application.Exit();
                 }
             };
 
-            // Abonează-te la evenimentul OnAuthError pentru a gestiona erorile de autentificare
+            // Evenimentul OnAuthError pentru a gestiona erorile de autentificare
             client.OnAuthError += (sender, e) =>
             {
-                error = true;
+                
                 Debug.WriteLine("Eroare la autentificare: " + e.Failure);
 
-                var result = MessageBox.Show("Eroare la autentificare: " + e.Failure, "Exit Confirmation", MessageBoxButtons.OK);
+                var result = MessageBox.Show("Eroare de autentificare, numele de utilizator sau parola sunt gresite! " + e.Exception, "Ieşire", MessageBoxButtons.OK);
                 if (result == DialogResult.OK)
                 {
                     Application.Exit();
@@ -204,48 +203,45 @@ namespace Licenta
             try
             {
                 string currentDate = DateTime.Now.ToShortDateString();
-                string currentTime = DateTime.Now.ToLongTimeString();
-
-             
+                string currentTime = DateTime.Now.ToLongTimeString();        
                 bool dateExists = File.Exists(filePath) && File.ReadAllText(filePath).Contains(currentDate);
-
                 using (StreamWriter writer = new StreamWriter(filePath, true))
                 {
                     if (!dateExists)
                     {
                         writer.WriteLine($"Date: {currentDate}");
                     }
-
                     writer.WriteLine($"{currentTime}: {text}");
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"An error occurred: {ex.Message}");
+                var result = MessageBox.Show("Eroare la scrierea în fişier: " + ex.Message, "Ieşire", MessageBoxButtons.OK);
+                if (result == DialogResult.OK)
+                {
+                    Application.Exit();
+                }
             }
         }
-
         private void WriteSensorDataToFile(string destinatar, string sensorName, string sensorValue)
         {
             try
-            {
-                
-               
-                string sensorLogFilePath = Path.Combine(baseLogPath, $"{destinatar}_{sensorName}.txt");
-
-                // Asigură existența directorului pentru fișierul senzorului
+            {                            
+                string sensorLogFilePath = Path.Combine(baseLogPath, $"{destinatar}_{sensorName}.txt");               
                 string directoryPath = Path.GetDirectoryName(sensorLogFilePath);
                 if (!Directory.Exists(directoryPath))
                 {
                     Directory.CreateDirectory(directoryPath);
-                }
-
-                // Scrie valoarea senzorului în fișierul corespunzător
+                }          
                 WriteTextToFile(sensorLogFilePath, $"Valoarea pentru {sensorName}: {sensorValue}");
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"An error occurred while writing sensor data to file: {ex.Message}");
+                var result = MessageBox.Show("Eroare la scrierea în fişier: " + ex.Message, "Ieşire", MessageBoxButtons.OK);
+                if (result == DialogResult.OK)
+                {
+                    Application.Exit();
+                }
             }
         }
 

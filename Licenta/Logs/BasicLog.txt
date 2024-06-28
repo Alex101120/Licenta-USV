@@ -6,3 +6,13 @@ Date: 20.06.2024
 17:30:46: Utilizatorul placuta1@localhost/MatriX a fost setat ca inactiv.
 Date: 27.06.2024
 15:09:06: Utilizatorul placuta1@localhost/MatriX a fost setat ca inactiv.
+Date: 28.06.2024
+13:40:10: Utilizatorul placuta1@localhost/MatriX a fost setat ca inactiv.
+13:40:10: Utilizatorul placuta3@localhost/MatriX a fost setat ca inactiv.
+13:40:11: Utilizatorul placuta4@localhost/MatriX a fost setat ca inactiv.
+19:28:02: Utilizatorul placuta1@localhost/MatriX a fost setat ca inactiv.
+19:28:02: Utilizatorul placuta2@localhost/MatriX a fost setat ca inactiv.
+19:28:02: Utilizatorul placuta4@localhost/MatriX a fost setat ca inactiv.
+19:28:02: Utilizatorul test1@localhost/87265742860416110932371 a fost setat ca inactiv.
+19:38:55: Utilizatorul test1@localhost/68049333081291524712563 a fost setat ca inactiv.
+19:39:14: Utilizatorul test1@localhost/68049333081291524712563 a fost setat ca inactiv.

@@ -43,11 +43,11 @@ namespace Licenta
 
 
 
-            comboBox1.Items.Add("SingleTestView");
-            comboBox1.Items.Add("MultiTextView");
-            comboBox1.Items.Add("ListView");
-            comboBox1.Items.Add("ChartLine");
-            comboBox1.Items.Add("AngularGaugeChart");
+            comboBox1.Items.Add("VizualizareText");
+            comboBox1.Items.Add("VizualizareTextMultiplu");
+            comboBox1.Items.Add("VizualizareListă");
+            comboBox1.Items.Add("GraficLinie");
+            comboBox1.Items.Add("GraficGauge");
 
         }
        
@@ -83,6 +83,7 @@ namespace Licenta
                     pictureBox.Image = Image.FromFile(@"D:\Licenta\Licenta-USV\Licenta\Assets\download.jpg");
                     pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
 
+                    //RadioButton pentru fiecare utilizator nou
                     RadioButton radioButton = new RadioButton
                     {
                         Name = user.Username,
@@ -99,7 +100,7 @@ namespace Licenta
                     {
                         Name = $"{user.Username}_Panel",
                         Size = MainDashboard.Size,
-                        BackColor = Color.DarkGray,
+                        BackColor = Color.LightGray,
                         BorderStyle = BorderStyle.FixedSingle,
                         Visible = false
                     };
@@ -118,7 +119,7 @@ namespace Licenta
                         BackColor = Color.Transparent
                     };
 
-                    // Populate the panel with controls as needed
+                    // Panou pentru fiecare utilizator nou
                     Label userLabel = new Label
                     {
                         Text = $"Panou de Comanda pentru {user.Username}",
@@ -239,30 +240,30 @@ namespace Licenta
             {
                 string selectedText1 = comboBox1.SelectedItem.ToString();
                 string selectedText2 = comboBox2.SelectedItem.ToString();
-                if (selectedText1 == "SingleTestView")
+                if (selectedText1 == "VizualizareText")
                 {
                    
                     SingleTextLabel(selectedText2);
                 }
-                if(selectedText1 == "MultiTextView")
+                if(selectedText1 == "VizualizareTextMultiplu")
                 {
                     MultiTextLabel(selectedText2);
                 }
-                if(selectedText1 == "ListView")
+                if(selectedText1 == "VizualizareListă")
                 {
                     
                     ListViewCreate(selectedText2);
                 }
-                if (selectedText1 == "ChartLine")
+                if (selectedText1 == "GraficLinie")
                 {
                     
                     LineChart(selectedText2);
                 }
-                if(selectedText1 == "AngularGaugeChart")
+                if(selectedText1 == "GraficGauge")
                 {
                     AngularGaugeChart(selectedText2);
                 }
-                
+         
             }
             else
             {
@@ -315,16 +316,16 @@ namespace Licenta
                     {
                         sensorLabel = new Label
                         {
-                            Name = $"{sensorName}_SingleTextLabel", // Unique name for identification
+                            Name = $"{sensorName}_SingleTextLabel", 
                             Text = $" {sensorName}: {sensorData[sensorName].Last()}",
                             AutoSize = true,
                             BackColor = Color.Transparent,
-                            Location = new Point(10, 10), // Default location; can be adjusted as needed
+                            Location = new Point(10, 10), 
                             Size = new Size(90, 20),
                             Font = new Font(Font, FontStyle.Bold),
                         };
 
-                        // Add mouse event handlers for moving the label
+                       //Metode pentru a muta Widget-ul
                         sensorLabel.MouseDown += SensorLabel_MouseDown;
                         sensorLabel.MouseMove += SensorLabel_MouseMove;
                         sensorLabel.MouseUp += SensorLabel_MouseUp;
@@ -338,6 +339,7 @@ namespace Licenta
                     }
                 }
             }
+        
             else
             {
                 var result = MessageBox.Show("Selecteaza un tabel ", "Iesire", MessageBoxButtons.OK);
@@ -366,15 +368,12 @@ namespace Licenta
                     {
                         sensorLabel = new Label
                         {
-                            Name = $"{sensorName}_MultiTextLabel", // Unique name for identification
-                            Text = labelText,
-                            AutoSize = true,
-                            BackColor = Color.Transparent,
-                            Location = new Point(10, 10),
-                            Size = new Size(90, 20),
-                            Font = new Font(Font, FontStyle.Bold),
-                        };
+                            Name = $"{sensorName}_MultiTextLabel", 
+                          Text = labelText,
+                     
+                       };
 
+                        //Metode pentru a muta Widget-ul
                         sensorLabel.MouseDown += SensorLabel_MouseDown;
                         sensorLabel.MouseMove += SensorLabel_MouseMove;
                         sensorLabel.MouseUp += SensorLabel_MouseUp;
@@ -413,21 +412,21 @@ namespace Licenta
 
                     if (listView == null)
                     {
-                        // Create a new ListView if it doesn't exist
+                       
                         listView = new ListView
                         {
                             Name = "CombinedSensorListView",
-                            Size = new Size(400, 200), // Adjusted size for better visibility
+                            Size = new Size(400, 200), 
                             Location = new Point(10, 10),
                             View = View.Details,
                             FullRowSelect = true,
                             GridLines = true
                         };
 
-                        // Add columns for sensor name and value
-                        listView.Columns.Add("Senzor", 150); // Column for sensor name
-                        listView.Columns.Add("Data", 200); // Column for data
-
+                        
+                        listView.Columns.Add("Senzor", 150); 
+                        listView.Columns.Add("Data", 200); 
+                         //Metode pentru a muta Widget-ul
                         listView.MouseDown += ListView_MouseDown;
                         listView.MouseMove += ListView_MouseMove;
                         listView.MouseUp += ListView_MouseUp;
@@ -532,7 +531,7 @@ namespace Licenta
             }
             else
             {
-                var result = MessageBox.Show("Selecteaza un tabel ", "Iesire", MessageBoxButtons.OK);
+                var result = MessageBox.Show("Selecteaza un panel ", "Iesire", MessageBoxButtons.OK);
                 if (result == DialogResult.OK)
                 {
 
@@ -554,8 +553,8 @@ namespace Licenta
                         Size = new Size(200, 200),
                         Name = $"{sensorName}_AngularGauge",
                         Value = double.Parse(sensorData[sensorName].Last()),
-                        FromValue = 0, // Set the starting value of the gauge
-                        ToValue = 1000, // Set the maximum value of the gauge
+                        FromValue = 0, 
+                        ToValue = 100, 
                         TicksForeground = System.Windows.Media.Brushes.White,                                             
                         Location = new Point(0, 270),
                         NeedleFill = System.Windows.Media.Brushes.White,
@@ -916,10 +915,8 @@ namespace Licenta
     {
         string userName = user.Username;
         string fileName = Path.Combine(defaultPath, $"{userName}.xlsx");
-
         // Inițializăm workbook cu o valoare implicită pentru a evita eroarea CS0165
         XLWorkbook workbook = null;
-
         try
         {
             if (File.Exists(fileName))
@@ -932,7 +929,6 @@ namespace Licenta
                 // Dacă fișierul nu există, creăm un workbook nou
                 workbook = new XLWorkbook();
             }
-
             // Iterăm prin fiecare sensor și adăugăm datele în sheet-ul corespunzător
             foreach (var sensor in sensorData)
             {
@@ -943,7 +939,6 @@ namespace Licenta
                     // Dacă sheet-ul există, adăugăm datele la sfârșitul acestuia
                     int lastRow = sensorWorksheet.LastRowUsed().RowNumber();
                     int rowIndex = lastRow + 1;
-
                     foreach (var value in sensor.Value)
                     {
                         sensorWorksheet.Cell(rowIndex, 1).Value = value;
@@ -968,21 +963,16 @@ namespace Licenta
                     }
                 }
             }
-
             // Salvăm workbook-ul
             workbook.SaveAs(fileName);
         }
         catch (IOException ex)
         {
-            // Aici gestionăm cazul în care fișierul Excel este deja deschis
             MessageBox.Show($"Fișierul Excel '{Path.GetFileName(fileName)}' este deja deschis. Vă rugăm să-l închideți și apoi să încercați din nou.", "Fișier deschis", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            // În acest punct, poți decide să iei alte acțiuni, cum ar fi să întrerupi procesul sau să returnezi o valoare specială
         }
         catch (Exception ex)
         {
-            // Aici gestionăm alte tipuri de excepții dacă este cazul
             MessageBox.Show($"Eroare la deschiderea sau salvarea fișierului Excel: {ex.Message}", "Eroare", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            // În acest punct, poți decide să iei alte acțiuni, cum ar fi să întrerupi procesul sau să returnezi o valoare specială
         }
     }
 }

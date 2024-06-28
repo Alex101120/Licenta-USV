@@ -241,3 +241,11 @@ Date: 27.06.2024
 16:09:20: Valoarea pentru SenzorA: 50
 16:09:48: Valoarea pentru SenzorA: 99
 16:20:07: Valoarea pentru SenzorA: 99
+Date: 28.06.2024
+12:50:15: Valoarea pentru SenzorA: 6
+13:35:35: Valoarea pentru SenzorA: 6
+13:36:02: Valoarea pentru SenzorA: 4
+13:36:06: Valoarea pentru SenzorA: 5
+13:36:09: Valoarea pentru SenzorA: 2
+13:36:11: Valoarea pentru SenzorA: 1
+13:36:53: Valoarea pentru SenzorA: 1

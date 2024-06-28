@@ -246,5 +246,14 @@
   <ItemGroup>
     <None Include="Resources\SetariLogo-removebg-preview.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BackGroundAuth.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BackGroundAuth1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ButonAuth.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

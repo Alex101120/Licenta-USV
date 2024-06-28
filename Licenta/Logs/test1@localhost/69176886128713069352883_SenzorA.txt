@@ -1,0 +1,24 @@
+Date: 28.06.2024
+19:46:10: Valoarea pentru SenzorA: 246
+19:46:15: Valoarea pentru SenzorA: 945
+19:46:20: Valoarea pentru SenzorA: 847
+19:46:24: Valoarea pentru SenzorA: 696
+19:46:29: Valoarea pentru SenzorA: 851
+19:46:35: Valoarea pentru SenzorA: 558
+19:46:39: Valoarea pentru SenzorA: 766
+19:46:44: Valoarea pentru SenzorA: 174
+19:46:49: Valoarea pentru SenzorA: 92
+19:46:54: Valoarea pentru SenzorA: 547
+19:46:59: Valoarea pentru SenzorA: 656
+19:47:04: Valoarea pentru SenzorA: 835
+19:47:08: Valoarea pentru SenzorA: 401
+19:47:13: Valoarea pentru SenzorA: 862
+19:47:18: Valoarea pentru SenzorA: 595
+19:47:23: Valoarea pentru SenzorA: 568
+19:47:28: Valoarea pentru SenzorA: 215
+19:47:33: Valoarea pentru SenzorA: 700
+19:47:38: Valoarea pentru SenzorA: 34
+19:47:43: Valoarea pentru SenzorA: 102
+19:47:48: Valoarea pentru SenzorA: 826
+19:47:53: Valoarea pentru SenzorA: 788
+19:47:58: Valoarea pentru SenzorA: 307
