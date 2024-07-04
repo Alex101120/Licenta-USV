@@ -143,6 +143,26 @@ namespace Licenta.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap download_removebg_preview__2_ {
+            get {
+                object obj = ResourceManager.GetObject("download-removebg-preview (2)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap IconFIsier__2_ {
+            get {
+                object obj = ResourceManager.GetObject("IconFIsier (2)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap LogoCheie {
             get {
                 object obj = ResourceManager.GetObject("LogoCheie", resourceCulture);
@@ -156,6 +176,16 @@ namespace Licenta.Properties {
         internal static System.Drawing.Bitmap LogoUser {
             get {
                 object obj = ResourceManager.GetObject("LogoUser", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap LogoUsv_removebg_preview {
+            get {
+                object obj = ResourceManager.GetObject("LogoUsv-removebg-preview", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

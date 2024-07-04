@@ -255,5 +255,14 @@
   <ItemGroup>
     <None Include="Resources\ButonAuth.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\IconFIsier %282%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\download-removebg-preview %282%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\LogoUsv-removebg-preview.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -10,6 +10,7 @@ using static Licenta.DashBoard;
 using System.Linq;
 using System.Timers;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace Licenta
 {
@@ -73,29 +74,48 @@ namespace Licenta
 
                 else
                 {
-                    
+
+                    string baseLogPath = @"D:\Licenta\Licenta-USV\Licenta\Logs";
+                    string BasicLog = Path.Combine(baseLogPath, $"BasicLog.txt");
+
+
                     string[] parts = mesaj.Split('/');
                     if (parts.Length == 2)
                     {
-                        
                         sensorName = parts[0]; // Exemplu: "SenzorA"
                         string sensorValue = parts[1]; // Exemplu: "6"
-                        Debug.WriteLine($"{sensorName}: {sensorValue}");
 
-                        // Verificare dacă există deja cheia (numele senzorului) în dicționar
-                        if (!sensorData.ContainsKey(sensorName))
+                        // Verificare dacă a doua parte poate fi convertită în double
+                        if (double.TryParse(sensorValue, out double result))
                         {
-                            // Dacă nu există, adaugă o nouă intrare în dicționar
-                            sensorData[sensorName] = new List<string>();
-                        }
+                            Debug.WriteLine($"{sensorName}: {sensorValue}");
 
-                        // Adaugă valoarea la lista asociată cu numele senzorului
-                        sensorData[sensorName].Add(sensorValue);
-                       
-                        WriteSensorDataToFile(destinatar, sensorName, sensorValue);
-                        MesajPrimit?.Invoke(this, EventArgs.Empty);
+                            // Verificare dacă există deja cheia (numele senzorului) în dicționar
+                            if (!sensorData.ContainsKey(sensorName))
+                            {
+                                // Dacă nu există, adaugă o nouă intrare în dicționar
+                                sensorData[sensorName] = new List<string>();
+                            }
+
+                            // Adaugă valoarea la lista asociată cu numele senzorului
+                            sensorData[sensorName].Add(sensorValue);
+
+                            WriteSensorDataToFile(destinatar, sensorName, sensorValue);
+                            MesajPrimit?.Invoke(this, EventArgs.Empty);
+                        }
+                        else
+                        {
+                            // Afișează un MessageBox dacă formatul datelor nu este acceptat
+                            MessageBox.Show("Formatul datelor nu este acceptat.", "Eroare de format", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            WriteTextToFile(BasicLog, $"Utilizatorul {destinatar} a trimis un mesaj al cărui format al datelor nu este acceptat.");
+                        }
                     }
-                    
+                    else
+                    {
+                        // Afișează un MessageBox dacă mesajul nu are formatul corect
+                        MessageBox.Show("Mesajul nu are formatul corect.", "Eroare de format", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        WriteTextToFile(BasicLog, $"Utilizatorul {destinatar} a trimis un mesaj care nu are formatul corect.");
+                    }
                 }
 
                         
@@ -134,7 +154,7 @@ namespace Licenta
                 var result = MessageBox.Show("Eroare la conectarea serverului " + e.Exception, "Ieşire", MessageBoxButtons.OK);
                 if (result == DialogResult.OK)
                 {
-                    Application.Exit();
+                    
                 }
             };
 
@@ -147,7 +167,7 @@ namespace Licenta
                 var result = MessageBox.Show("Eroare de autentificare, numele de utilizator sau parola sunt gresite! " + e.Exception, "Ieşire", MessageBoxButtons.OK);
                 if (result == DialogResult.OK)
                 {
-                    Application.Exit();
+                    
                 }
             };
 

@@ -1,0 +1,8 @@
+Date: 03.07.2024
+16:17:12: Am primit mesajul 'Online' Primit de la test1@localhost/159154601835987051341795
+16:17:20: Am primit mesajul 'You said: Mesaj Primit' Primit de la test1@localhost/159154601835987051341795
+16:17:37: Am primit mesajul 'SenzorA/535' Primit de la test1@localhost/159154601835987051341795
+16:17:42: Am primit mesajul 'SenzorA/919' Primit de la test1@localhost/159154601835987051341795
+16:17:47: Am primit mesajul 'SenzorA/363' Primit de la test1@localhost/159154601835987051341795
+16:17:52: Am primit mesajul 'SenzorA/320' Primit de la test1@localhost/159154601835987051341795
+16:18:06: Am primit mesajul 'Aaa' Primit de la test1@localhost/159154601835987051341795

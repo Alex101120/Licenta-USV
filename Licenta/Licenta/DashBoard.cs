@@ -370,8 +370,13 @@ namespace Licenta
                         {
                             Name = $"{sensorName}_MultiTextLabel", 
                           Text = labelText,
-                     
-                       };
+                            AutoSize = true,
+                            BackColor = Color.Transparent,
+                            Location = new Point(10, 10),
+                            Size = new Size(90, 20),
+                            Font = new Font(Font, FontStyle.Bold),
+
+                        };
 
                         //Metode pentru a muta Widget-ul
                         sensorLabel.MouseDown += SensorLabel_MouseDown;

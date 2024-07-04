@@ -16,3 +16,12 @@ Date: 28.06.2024
 19:28:02: Utilizatorul test1@localhost/87265742860416110932371 a fost setat ca inactiv.
 19:38:55: Utilizatorul test1@localhost/68049333081291524712563 a fost setat ca inactiv.
 19:39:14: Utilizatorul test1@localhost/68049333081291524712563 a fost setat ca inactiv.
+Date: 29.06.2024
+12:27:19: Utilizatorul placuta1@localhost/MatriX a fost setat ca inactiv.
+Date: 03.07.2024
+16:12:05: Utilizatorul placuta1@localhost/MatriX a trimis un mesaj care nu are formatul corect.
+16:13:03: Utilizatorul placuta1@localhost/MatriX a trimis un mesaj care nu are formatul corect.
+16:16:30: Utilizatorul placuta1@localhost/MatriX a fost setat ca inactiv.
+16:17:20: Utilizatorul test1@localhost/159154601835987051341795 a trimis un mesaj care nu are formatul corect.
+16:18:06: Utilizatorul test1@localhost/159154601835987051341795 a trimis un mesaj care nu are formatul corect.
+21:19:03: Utilizatorul test1@localhost/135560430438619132762050 a trimis un mesaj care nu are formatul corect.

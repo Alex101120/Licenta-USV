@@ -1,0 +1,17 @@
+Date: 03.07.2024
+21:18:46: Am primit mesajul 'Online' Primit de la test1@localhost/135560430438619132762050
+21:19:03: Am primit mesajul 'You said: Mesaj Primit' Primit de la test1@localhost/135560430438619132762050
+21:20:10: Am primit mesajul 'Online' Primit de la test1@localhost/135560430438619132762050
+21:20:46: Am primit mesajul 'SenzorA/582' Primit de la test1@localhost/135560430438619132762050
+21:20:51: Am primit mesajul 'SenzorA/54' Primit de la test1@localhost/135560430438619132762050
+21:20:55: Am primit mesajul 'SenzorA/430' Primit de la test1@localhost/135560430438619132762050
+21:21:00: Am primit mesajul 'SenzorA/826' Primit de la test1@localhost/135560430438619132762050
+21:21:05: Am primit mesajul 'SenzorA/192' Primit de la test1@localhost/135560430438619132762050
+21:21:11: Am primit mesajul 'SenzorA/32' Primit de la test1@localhost/135560430438619132762050
+21:21:16: Am primit mesajul 'SenzorA/589' Primit de la test1@localhost/135560430438619132762050
+21:21:21: Am primit mesajul 'SenzorA/838' Primit de la test1@localhost/135560430438619132762050
+21:21:26: Am primit mesajul 'SenzorA/965' Primit de la test1@localhost/135560430438619132762050
+21:21:31: Am primit mesajul 'SenzorA/914' Primit de la test1@localhost/135560430438619132762050
+21:21:37: Am primit mesajul 'SenzorA/92' Primit de la test1@localhost/135560430438619132762050
+21:21:42: Am primit mesajul 'SenzorA/623' Primit de la test1@localhost/135560430438619132762050
+21:21:46: Am primit mesajul 'SenzorA/809' Primit de la test1@localhost/135560430438619132762050
