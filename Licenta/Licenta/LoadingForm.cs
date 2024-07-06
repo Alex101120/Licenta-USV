@@ -9,6 +9,7 @@ namespace Licenta
     public partial class LoadingForm : Form
     {
         Server server = new Server();
+      
         Timer connectTimer;
         Timer statusTimer;
          
@@ -50,6 +51,7 @@ namespace Licenta
 
         private void connectServer()
         {
+            
             server.ConnectToServer();
         }
 
@@ -113,5 +115,6 @@ namespace Licenta
         {
 
         }
+
     }
 }

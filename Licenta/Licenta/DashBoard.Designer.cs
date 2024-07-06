@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            Matrix.IO.Cache.MemoryStorage<Matrix.Xmpp.Disco.Info> memoryStorage_12 = new Matrix.IO.Cache.MemoryStorage<Matrix.Xmpp.Disco.Info>();
+            Matrix.IO.Cache.MemoryStorage<Matrix.Xmpp.Disco.Info> memoryStorage_11 = new Matrix.IO.Cache.MemoryStorage<Matrix.Xmpp.Disco.Info>();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.Adauga = new System.Windows.Forms.Button();
             this.discoManager1 = new Matrix.Xmpp.Client.DiscoManager();
@@ -39,7 +39,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.DataTime = new System.Windows.Forms.Label();
-            this.DataAndTIme = new System.Windows.Forms.Timer(this.components);
+            this.DataAndTime = new System.Windows.Forms.Timer(this.components);
             this.Time = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.DeschideExcelLabel = new System.Windows.Forms.Label();
@@ -85,7 +85,7 @@
             this.discoManager1.AutoDiscover = false;
             this.discoManager1.AutoReplyToDiscoInfo = false;
             this.discoManager1.AutoSendCaps = false;
-            this.discoManager1.CapsStorage = memoryStorage_12;
+            this.discoManager1.CapsStorage = memoryStorage_11;
             this.discoManager1.Node = null;
             this.discoManager1.XmppClient = null;
             // 
@@ -148,10 +148,10 @@
             this.DataTime.Text = "Data";
             this.DataTime.Click += new System.EventHandler(this.label3_Click);
             // 
-            // DataAndTIme
+            // DataAndTime
             // 
-            this.DataAndTIme.Interval = 1000;
-            this.DataAndTIme.Tick += new System.EventHandler(this.DataAndTIme_Tick);
+            this.DataAndTime.Interval = 1000;
+            this.DataAndTime.Tick += new System.EventHandler(this.DataAndTIme_Tick);
             // 
             // Time
             // 
@@ -318,7 +318,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label DataTime;
-        private System.Windows.Forms.Timer DataAndTIme;
+        private System.Windows.Forms.Timer DataAndTime;
         private System.Windows.Forms.Label Time;
         private System.Windows.Forms.Button SettingsButton;
         private System.Windows.Forms.Label label3;

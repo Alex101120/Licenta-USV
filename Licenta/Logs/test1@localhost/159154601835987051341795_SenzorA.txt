@@ -1,5 +1,0 @@
-Date: 03.07.2024
-16:17:37: Valoarea pentru SenzorA: 535
-16:17:42: Valoarea pentru SenzorA: 919
-16:17:47: Valoarea pentru SenzorA: 363
-16:17:52: Valoarea pentru SenzorA: 320

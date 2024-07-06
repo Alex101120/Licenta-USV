@@ -24,6 +24,7 @@ namespace Licenta
         public string BasePathExcel { get; private set; }
         public SettingsForm()
         {
+            
             InitializeComponent();
           
            
@@ -38,6 +39,9 @@ namespace Licenta
             InitializeComponent();
             LoadDefaultPath();
             _dashBoard = dashBoard;
+
+            string projectDirectory = Directory.GetParent(Environment.CurrentDirectory).Parent.FullName;
+            PathLabel.Text = projectDirectory.ToString();
         }
 
 
@@ -69,15 +73,15 @@ namespace Licenta
             if (File.Exists(configFilePath))
             {
                 // Citim path-ul din fișierul de configurare
-                Debug.WriteLine("Este");
+              
                 BasePathExcel = File.ReadAllText(configFilePath);
                 PathLabel.Text = BasePathExcel;
             }
             else
             {
                 // Dacă fișierul de configurare nu există, setăm un path implicit
-                Debug.WriteLine("Nu este");
-                BasePathExcel = @"D:\Licenta\Licenta-USV\Licenta\Logs";
+               
+                BasePathExcel = projectDirectory;
             }
         }
 
@@ -97,5 +101,12 @@ namespace Licenta
         {
 
         }
+
+        private void SettingsForm_Load(object sender, EventArgs e)
+        {
+
+        }
+       
+
     }
 }

@@ -24,7 +24,7 @@ namespace Licenta
         private bool isDraggingChart = false;
         private Point chartStartPoint = Point.Empty;
         private SettingsForm _settingsForm;
-        string defaultPath = @"D:\Licenta\Licenta-USV\Licenta\Logs";
+        public string defaultPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Logs");
 
         public DashBoard()
         {
@@ -38,6 +38,7 @@ namespace Licenta
             _settingsForm = new SettingsForm(this);
             _settingsForm.PathSchimbat += PathSchimbat;
             LoadDefaultPath();
+            DataAndTime.Start();
 
 
 
@@ -51,7 +52,7 @@ namespace Licenta
 
         }
        
-
+        // Crearea panourilor cu user---------------------------------
         void UpdateUser()
         {
             Debug.WriteLine(server.Mesaj);
@@ -143,7 +144,9 @@ namespace Licenta
                 }
             }
         }
+        //---------------------------
 
+        //Logica codului de radiobox------------------------------
         private void RadioButton_CheckedChanged(object sender, EventArgs e)
         {
             if (!(sender is RadioButton radioButton) || !radioButton.Checked)
@@ -197,7 +200,7 @@ namespace Licenta
                 }
             }
         }
-
+        //------------------------------------------------------
 
         private void flowLayoutPanel1_Paint(object sender, PaintEventArgs e)
         {
@@ -287,7 +290,7 @@ namespace Licenta
 
         private void UpdateDateTime()
         {
-            // Set the text of the label to the current date and time
+           
             DataTime.Text = DateTime.Now.ToString("dddd, dd MMMM yyyy");
             Time.Text = DateTime.Now.ToString("HH:mm:ss");
         }
@@ -301,7 +304,7 @@ namespace Licenta
         {
     
         }
-
+        // Cod de creare a widgeturilor-----------------------------------------------------------
         private void SingleTextLabel(string sensorName)
         {
             Panel currentPanel = MainDashboard.Controls.OfType<Panel>().FirstOrDefault(panel => panel.Visible);
@@ -417,21 +420,20 @@ namespace Licenta
 
                     if (listView == null)
                     {
-                       
                         listView = new ListView
                         {
-                            Name = "CombinedSensorListView",
-                            Size = new Size(400, 200), 
+                            Name = "SensorListView_" + sensorName,
+                            Size = new Size(400, 200),
                             Location = new Point(10, 10),
                             View = View.Details,
                             FullRowSelect = true,
                             GridLines = true
                         };
 
-                        
-                        listView.Columns.Add("Senzor", 150); 
-                        listView.Columns.Add("Data", 200); 
-                         //Metode pentru a muta Widget-ul
+                        listView.Columns.Add("Senzor", 150);
+                        listView.Columns.Add("Data", 200);
+
+                        // Metode pentru a muta Widget-ul
                         listView.MouseDown += ListView_MouseDown;
                         listView.MouseMove += ListView_MouseMove;
                         listView.MouseUp += ListView_MouseUp;
@@ -440,37 +442,19 @@ namespace Licenta
                         currentPanel.Controls.Add(listView);
                     }
 
-                    // Add or update rows in the ListView
+                    
+                    listView.Items.Clear();
                     foreach (var data in sensorData[sensorName])
                     {
-                        bool itemExists = false;
-                        foreach (ListViewItem item in listView.Items)
-                        {
-                            if (item.Text == sensorName)
-                            {
-                                item.SubItems.Add(data); // Add data under existing sensor column
-                                itemExists = true;
-                                break;
-                            }
-                        }
-
-                        if (!itemExists)
-                        {
-                            // Add new item with sensor name and data
-                            ListViewItem newItem = new ListViewItem(sensorName);
-                            newItem.SubItems.Add(data);
-                            listView.Items.Add(newItem);
-                        }
+                        ListViewItem newItem = new ListViewItem(sensorName);
+                        newItem.SubItems.Add(data);
+                        listView.Items.Add(newItem);
                     }
                 }
             }
             else
             {
-                var result = MessageBox.Show("Selecteaza un tabel ", "Iesire", MessageBoxButtons.OK);
-                if (result == DialogResult.OK)
-                {
-
-                }
+                MessageBox.Show("Selecteaza un tabel", "Iesire", MessageBoxButtons.OK);
             }
         }
 
@@ -591,7 +575,9 @@ namespace Licenta
                 }
             }
         }
+        //----------------------------------------------------------------------
 
+        //Cod necesar pentru a misca si sterge widgeturile--------------------------
         private void Chart_MouseDown(object sender, MouseEventArgs e)
         {
             isDraggingChart = true;
@@ -636,154 +622,6 @@ namespace Licenta
         {
             isDragging = false;
         }
-        private void UpdateSingleLabel()
-        {
-            Dictionary<string, List<string>> sensorData = server.GetSenzorData();
-
-            foreach (Control control in MainDashboard.Controls)
-            {
-                if (control is Panel panel)
-                {
-                    foreach (Control innerControl in panel.Controls)
-                    {
-                        if (innerControl is Label lbl)
-                        {
-                            string sensorName = lbl.Name.Split('_')[0];
-                            if (sensorData.ContainsKey(sensorName))
-                            {
-                                lbl.Text = $" {sensorName}: {sensorData[sensorName].Last()}";
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        private void UpdateAllCharts()
-        {
-            foreach (Panel panel in MainDashboard.Controls.OfType<Panel>())
-            {
-                // Verificăm și actualizăm CartesianChart
-                CartesianChart cartesianChart = panel.Controls.OfType<CartesianChart>().FirstOrDefault();
-                if (cartesianChart != null)
-                {
-                    string sensorName = cartesianChart.Name.Replace("_Chart", "");
-                    Dictionary<string, List<string>> sensorData = server.GetSenzorData();
-                    if (sensorData.ContainsKey(sensorName))
-                    {
-                        var lineSeries = cartesianChart.Series[0] as LiveCharts.Wpf.LineSeries;
-                        if (lineSeries != null)
-                        {
-                            lineSeries.Values.Clear();
-                            lineSeries.Values.AddRange(sensorData[sensorName].Select(value => (object)double.Parse(value)).ToList());
-                        }
-                    }
-                }
-
-                // Verificăm și actualizăm AngularGauge
-                LiveCharts.WinForms.AngularGauge angularGauge = panel.Controls.OfType<LiveCharts.WinForms.AngularGauge>().FirstOrDefault();
-                if (angularGauge != null)
-                {
-                    string sensorName = angularGauge.Name.Replace("_AngularGauge", "");
-                    Dictionary<string, List<string>> sensorData = server.GetSenzorData();
-
-                    // Găsește valoarea maximă din dicționar
-                    double maxValue = sensorData
-                        .SelectMany(kv => kv.Value)
-                        .Select(valueStr => double.Parse(valueStr))
-                        .Max();
-
-                    // Setează proprietatea ToValue la valoarea maximă găsită
-                    angularGauge.ToValue = maxValue;
-                    if (maxValue <= 100)
-                    {
-                        angularGauge.LabelsStep = 5;
-                    }
-                    else if (maxValue <= 1000)
-                    {
-                        angularGauge.LabelsStep = 10;
-                    }
-                    else if (maxValue <= 10000)
-                    {
-                        angularGauge.LabelsStep = 100;
-                    }
-                    else if (maxValue <= 100000)
-                    {
-                        angularGauge.LabelsStep = 1000;
-                    }
-                    else
-                    {
-                        angularGauge.LabelsStep = 10000;
-                    }
-                    if (sensorData.ContainsKey(sensorName))
-                    {
-                        angularGauge.Value = double.Parse(sensorData[sensorName].Last());
-                       
-                    }
-                }
-            }
-        }
-        private void UpdateMultiTextLabels()
-        {
-            Dictionary<string, List<string>> sensorData = server.GetSenzorData();
-
-            foreach (Panel panel in MainDashboard.Controls.OfType<Panel>())
-            {
-                foreach (Control control in panel.Controls.OfType<Label>())
-                {
-                    string[] parts = control.Name.Split('_');
-                    if (parts.Length == 2 && parts[1] == "MultiTextLabel")
-                    {
-                        string sensorName = parts[0];
-                        if (sensorData.ContainsKey(sensorName))
-                        {
-                            List<string> recentData = sensorData[sensorName].Skip(Math.Max(0, sensorData[sensorName].Count - 5)).ToList();
-                            recentData.Reverse();
-                            control.Text = $"{sensorName}: {string.Join(", ", recentData)}";
-                        }
-                    }
-                }
-            }
-        }
-
-
-        private void UpdateListViews()
-        {
-            Dictionary<string, List<string>> sensorData = server.GetSenzorData();
-
-            foreach (Panel panel in MainDashboard.Controls.OfType<Panel>())
-            {
-                foreach (ListView listView in panel.Controls.OfType<ListView>())
-                {
-                    string sensorName = listView.Columns[0].Text.Replace(" Senzor", ""); // Adjusted to match "Senzor" column
-
-                    if (sensorData.ContainsKey(sensorName))
-                    {
-                        HashSet<string> existingItems = new HashSet<string>();
-
-                        foreach (ListViewItem item in listView.Items)
-                        {
-                            existingItems.Add(item.SubItems[1].Text); // Store existing data values
-                        }
-
-                        // Add new items from sensorData that are not already in the ListView
-                        foreach (var data in sensorData[sensorName])
-                        {
-                            if (!existingItems.Contains(data))
-                            {
-                                ListViewItem newItem = new ListViewItem(sensorName);
-                                newItem.SubItems.Add(data);
-                                listView.Items.Add(newItem);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-
-
-
 
         private void ListView_MouseDown(object sender, MouseEventArgs e)
         {
@@ -854,23 +692,186 @@ namespace Licenta
                 }
             }
         }
-        private void Dashboard_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            // Asigură-te că vrei să închizi aplicația
+        //-------------------------------------------------------
 
-            var result = MessageBox.Show("Are you sure you want to exit?", "Exit Confirmation", MessageBoxButtons.YesNo);
-            if (result == DialogResult.No)
+        //Cod de update a widgeturilor--------------------------------
+        private void UpdateSingleLabel()
+        {
+            Dictionary<string, List<string>> sensorData = server.GetSenzorData();
+
+            foreach (Control control in MainDashboard.Controls)
             {
-                e.Cancel = true; // Anulează închiderea formularului
+                if (control is Panel panel)
+                {
+                    foreach (Control innerControl in panel.Controls)
+                    {
+                        if (innerControl is Label lbl)
+                        {
+                            string sensorName = lbl.Name.Split('_')[0];
+                            if (sensorData.ContainsKey(sensorName))
+                            {
+                                lbl.Text = $" {sensorName}: {sensorData[sensorName].Last()}";
+                            }
+                        }
+                    }
+                }
             }
         }
+
+        private void UpdateAllCharts()
+        {
+            foreach (Panel panel in MainDashboard.Controls.OfType<Panel>())
+            {
+                // Verificăm și actualizăm CartesianChart
+                CartesianChart cartesianChart = panel.Controls.OfType<CartesianChart>().FirstOrDefault();
+                if (cartesianChart != null)
+                {
+                    string sensorName = cartesianChart.Name.Replace("_Chart", "");
+                    Dictionary<string, List<string>> sensorData = server.GetSenzorData();
+                    if (sensorData.ContainsKey(sensorName))
+                    {
+                        var lineSeries = cartesianChart.Series[0] as LiveCharts.Wpf.LineSeries;
+                        if (lineSeries != null)
+                        {
+                            lineSeries.Values.Clear();
+                            lineSeries.Values.AddRange(sensorData[sensorName].Select(value => (object)double.Parse(value)).ToList());
+                        }
+                    }
+                }
+
+                
+                // Verificăm și actualizăm AngularGauge
+                LiveCharts.WinForms.AngularGauge angularGauge = panel.Controls.OfType<LiveCharts.WinForms.AngularGauge>().FirstOrDefault();
+                if (angularGauge != null)
+                {
+                    string sensorName = angularGauge.Name.Replace("_AngularGauge", "");
+                    Dictionary<string, List<string>> sensorData = server.GetSenzorData();
+
+                    // Găsește valoarea maximă din dicționar
+                    double maxValue = sensorData
+                        .SelectMany(kv => kv.Value)
+                        .Select(valueStr => double.Parse(valueStr))
+                        .Max();
+
+                    // Setează o limită superioară rezonabilă pentru a preveni crash-ul
+                    if (maxValue > 1000000)
+                    {
+                        maxValue = 1000000;  // Limită superioară
+                    }
+
+                    // Setează proprietatea ToValue la valoarea maximă găsită
+                    angularGauge.ToValue = maxValue;
+
+                    // Calculează automat LabelsStep
+                    angularGauge.LabelsStep = CalculateLabelsStep(maxValue);
+
+                    if (sensorData.ContainsKey(sensorName))
+                    {
+                        double sensorValue = double.Parse(sensorData[sensorName].Last());
+
+                        // Setează o limită rezonabilă pentru a preveni crash-ul
+                        if (sensorValue > 1000000)
+                        {
+                            sensorValue = 1000000;  // Limită superioară
+                        }
+
+                        angularGauge.Value = sensorValue;
+                    }
+                }
+            }
+        }
+        private void UpdateMultiTextLabels()
+        {
+            Dictionary<string, List<string>> sensorData = server.GetSenzorData();
+
+            foreach (Panel panel in MainDashboard.Controls.OfType<Panel>())
+            {
+                foreach (Control control in panel.Controls.OfType<Label>())
+                {
+                    string[] parts = control.Name.Split('_');
+                    if (parts.Length == 2 && parts[1] == "MultiTextLabel")
+                    {
+                        string sensorName = parts[0];
+                        if (sensorData.ContainsKey(sensorName))
+                        {
+                            List<string> recentData = sensorData[sensorName].Skip(Math.Max(0, sensorData[sensorName].Count - 5)).ToList();
+                            recentData.Reverse();
+                            control.Text = $"{sensorName}: {string.Join(", ", recentData)}";
+                        }
+                    }
+                }
+            }
+        }
+
+
+        private void UpdateListViews()
+        {
+            Dictionary<string, List<string>> sensorData = server.GetSenzorData();
+
+            foreach (Panel panel in MainDashboard.Controls.OfType<Panel>())
+            {
+                foreach (ListView listView in panel.Controls.OfType<ListView>())
+                {
+                    foreach (string sensorName in sensorData.Keys)
+                    {
+                        string listViewName = "SensorListView_" + sensorName;
+                        if (listView.Name == listViewName)
+                        {
+                            listView.Items.Clear();
+                            foreach (var data in sensorData[sensorName])
+                            {
+                                ListViewItem newItem = new ListViewItem(sensorName);
+                                newItem.SubItems.Add(data);
+                                listView.Items.Add(newItem);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        //---------------------------------------------------------------------------
+
+        /// Codul pentru iesire---------------------------------------------
+        private void Dashboard_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            var result = MessageBox.Show("Ești sigur că vrei să ieși?", "Confirmare ieșire", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.No)
+            {
+                e.Cancel = true; 
+            }
+            else
+            {
+                List<Form> formsToClose = new List<Form>();
+
+                
+                foreach (Form form in Application.OpenForms)
+                {
+                    if (form != this) 
+                    {
+                        formsToClose.Add(form);
+                    }
+                }
+
+               
+                foreach (Form form in formsToClose)
+                {
+                    form.Close(); 
+                }
+
+              
+                this.Dispose(); 
+                Application.Exit(); 
+            }
+        }
+
 
         private void exitButton_Click(object sender, EventArgs e)
         {
             server.DisconnectFromServer();
             Application.Exit(); // Închide întreaga aplicație
         }
-
+        ///----------------------------------------------
+        // Setttings -----------------------------------
         private void SettingsButton_Click(object sender, EventArgs e)
         {
             this.Hide();
@@ -890,7 +891,7 @@ namespace Licenta
             else
             {
                 // Dacă fișierul de configurare nu există, setăm un path implicit
-                defaultPath = @"D:\Licenta\Licenta-USV\Licenta\Logs";
+                defaultPath =  Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Excel");
             }
         }
 
@@ -906,7 +907,8 @@ namespace Licenta
             }
         }
 
-
+        //-----------------------------------------------
+        // Cod scriere in excel--------------------------
        public void WriteDataToExcel(Dictionary<string, List<string>> sensorData, string defaultPath, List<User> activeUsers)
 {
     // Verificăm dacă folderul defaultPath există, altfel îl creăm
@@ -981,7 +983,7 @@ namespace Licenta
         }
     }
 }
-
+        //-------------------------------------------------
 
         private void SalvarePathConfig(string path)
         {
@@ -1043,7 +1045,7 @@ namespace Licenta
                 }
             }
         }
-
+        //----------------------------
         private void DeschideExcelLabel_Click(object sender, EventArgs e)
         {
 
@@ -1053,5 +1055,30 @@ namespace Licenta
         {
 
         }
+        //Cod pentru a determina labelstepurile pentru angular chart
+        private double CalculateLabelsStep(double maxValue)
+        {
+            // Determină ordinea de magnitudine a valorii maxime
+            double magnitude = Math.Pow(10, Math.Floor(Math.Log10(maxValue)));
+
+            // Setează step-ul ca fiind 1/10 din magnitudine
+            double step = magnitude / 10;
+
+            // Rotunjește step-ul la cea mai apropiată valoare multiplă de 5, 10, 50, 100, etc.
+            double[] possibleSteps = { 1, 2, 5, 10 };
+            double bestStep = step;
+            foreach (double possibleStep in possibleSteps)
+            {
+                double currentStep = magnitude * possibleStep / 10;
+                if (maxValue / currentStep <= 10)
+                {
+                    bestStep = currentStep;
+                    break;
+                }
+            }
+
+            return bestStep;
+        }
+        //------------------------------------------
     }
 }

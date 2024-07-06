@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Matrix.Xmpp.Roster;
 using static Licenta.DashBoard;
-
+using static Licenta.AuthFrom;
 using System.Linq;
 using System.Timers;
 using System.Windows.Forms;
@@ -23,32 +23,32 @@ namespace Licenta
         public List<User> activeUsers = new List<User>();
         public event EventHandler UsersUpdated;
         public event EventHandler MesajPrimit;
-
         private Dictionary<string, System.Timers.Timer> userTimers = new Dictionary<string, System.Timers.Timer>();
         private const double timeoutInterval = 300000;
         Dictionary<string, List<string>> sensorData = new Dictionary<string, List<string>>();
-        public string baseLogPath = @"D:\Licenta\Licenta-USV\Licenta\Logs";
+        public string baseLogPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Logs");
         string sensorName;
+        public string username;
+        public string password;
         
-
-
-
-
+     
 
         public Server()
         {
-            AuthFrom authFrom = new AuthFrom();
+            AuthFrom auth = new AuthFrom();
+
             
 
             client = new XmppClient
             {
                 XmppDomain = "localhost", // Domeniul serverului XMPP
-                Username = authFrom.GetUsername(), // Numele de utilizator
-                Password = authFrom.GetPassword(), // Parola utilizatorului
+                Username = auth.GetUsername(), // Numele de utilizator
+                Password = auth.GetPassword(), // Parola utilizatorului
                 Resource = "CSharpApp" // O resursă opțională pentru identificarea sesiunii
+                
             };
-            
 
+        
             client.OnMessage += (sender, e) =>
             {
                 Debug.WriteLine($"Message from {e.Message.From}: {e.Message.Body}");
@@ -75,8 +75,8 @@ namespace Licenta
                 else
                 {
 
-                    string baseLogPath = @"D:\Licenta\Licenta-USV\Licenta\Logs";
-                    string BasicLog = Path.Combine(baseLogPath, $"BasicLog.txt");
+                    string baseLogPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Logs");
+        string BasicLog = Path.Combine(baseLogPath, $"BasicLog.txt");
 
 
                     string[] parts = mesaj.Split('/');
@@ -127,7 +127,7 @@ namespace Licenta
                     string receivedLogFilePath = Path.Combine(baseLogPath, $"{destinatar}_LogsMesajePrimite.txt");
                     string sentLogFilePath = Path.Combine(baseLogPath, $"{destinatar}_LogsMesajeTrimise.txt");
 
-                        // Ensure the directory exists
+                        
                         string directoryPath = Path.GetDirectoryName(receivedLogFilePath);
                         if (!Directory.Exists(directoryPath))
                         {
@@ -154,7 +154,7 @@ namespace Licenta
                 var result = MessageBox.Show("Eroare la conectarea serverului " + e.Exception, "Ieşire", MessageBoxButtons.OK);
                 if (result == DialogResult.OK)
                 {
-                    
+                    Application.Exit();
                 }
             };
 
@@ -167,15 +167,14 @@ namespace Licenta
                 var result = MessageBox.Show("Eroare de autentificare, numele de utilizator sau parola sunt gresite! " + e.Exception, "Ieşire", MessageBoxButtons.OK);
                 if (result == DialogResult.OK)
                 {
-                    
+                    Application.Exit();
                 }
             };
 
            
 
         }
-
-        
+     
 
         public Dictionary<string, List<string>> GetSenzorData()
         {
@@ -190,7 +189,7 @@ namespace Licenta
      
         public void ConnectToServer()
         {
-           
+         
             client.Open();
             
         }
@@ -215,7 +214,7 @@ namespace Licenta
             }
             else
             {
-                Console.WriteLine("Client is not connected to the XMPP server.");
+                Console.WriteLine("Clientul nu e conectat la serverul XMPP.");
             }
         }
         static void WriteTextToFile(string filePath, string text)
@@ -291,8 +290,8 @@ namespace Licenta
             var user = activeUsers.FirstOrDefault(u => u.Username == username);
             if (user != null)
             {
-                string baseLogPath = @"D:\Licenta\Licenta-USV\Licenta\Logs";
-                string BasicLog = Path.Combine(baseLogPath, $"BasicLog.txt");
+               string baseLogPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Logs");
+        string BasicLog = Path.Combine(baseLogPath, $"BasicLog.txt");
                 user.IsActive = false;
                 UsersUpdated?.Invoke(this, EventArgs.Empty);
                 WriteTextToFile(BasicLog, $"Utilizatorul {username} a fost setat ca inactiv.");

@@ -1,3 +1,0 @@
-Date: 28.06.2024
-19:23:32: Am trimis mesajul 'Mesaj Primit' la test1@localhost/167041922366963107052499
-19:23:35: Am trimis mesajul 'Mesaj Primit' la test1@localhost/167041922366963107052499
